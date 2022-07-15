@@ -4,13 +4,14 @@
     "express": "^4.18.1",
     "express-async-errors": "^3.1.1",
     "mysql2": "^2.3.3",
-    "nodemon": "^2.0.19"
+    "nodemon": "^2.0.19",
+    "sequelize": "^6.21.3",
+    "sequelize-cli": "^6.4.1"
   },
   "name": "case-psel-xp-backend",
   "description": "Case denvolvido para o processo seletivo da XP Inc.",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
