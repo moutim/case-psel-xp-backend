@@ -1,0 +1,28 @@
+{
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-async-errors": "^3.1.1",
+    "mysql2": "^2.3.3",
+    "nodemon": "^2.0.19"
+  },
+  "name": "case-psel-xp-backend",
+  "description": "Case denvolvido para o processo seletivo da XP Inc.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moutim/case-psel-xp-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/moutim/case-psel-xp-backend/issues"
+  },
+  "homepage": "https://github.com/moutim/case-psel-xp-backend#readme"
+}
