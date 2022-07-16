@@ -7,7 +7,7 @@ const transactionStockSchema = (sequelize, DataTypes) => {
     quantity: DataTypes.INTEGER,
     typeId: DataTypes.INTEGER
     },
-  { timestamps: false }
+  { timestamps: false, freezeTableName: true, }
   );
 
   transactionStockTable.associate = (models) => {
@@ -17,14 +17,14 @@ const transactionStockSchema = (sequelize, DataTypes) => {
       through: transactionStockTable,
       foreignKey: 'customerId',
       otherKey: 'stockId',
-      as: 'stock'
+      as: 'customer'
     });
 
     models.stock.belongsToMany(models.customer, {
       through: transactionStockTable,
       foreignKey: 'stockId',
       otherKey: 'customerId',
-      as: 'customer'
+      as: 'stock'
     });
   }
 
