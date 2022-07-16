@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  node:
+    image: node:16
+    container_name: psel_node
+    tty: true
+    stdin_open: true
+    command: bash
+    restart: always
+    working_dir: /app
+    volumes:
+      - ./:/app
+    depends_on:
+      - db
+    ports:
+      - 3000:3000
+    environment:
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+      MYSQL_HOST: db
+
+  db:
+    container_name: psel_db
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - 3306:3306
+
+networks:
+  default:
