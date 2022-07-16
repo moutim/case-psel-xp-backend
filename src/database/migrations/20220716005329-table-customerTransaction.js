@@ -2,38 +2,12 @@
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('transactionCustomerStock', {
-      stockId: {
+    await queryInterface.createTable('customerTransaction', {
+      transactionId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: {
-          model: 'stock',
-          key: 'stockId'
-        },
-        onDelete: 'CASCADE',
+        autoIncrement: true,
         primaryKey: true,
-      },
-      customerId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'customer',
-          key: 'customerId'
-        },
-        onDelete: 'CASCADE',
-        primaryKey: true,
-      },
-      value: {
-        allowNull: false,
-        type: Sequelize.DECIMAL
-      },
-      quantity: {
-        allowNull: false,
-        type: Sequelize.INTEGER
-      },
-      date: {
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.fn('now')
       },
       typeId: {
         allowNull: false,
@@ -44,10 +18,27 @@ module.exports = {
         },
         onDelete: 'CASCADE',
       },
+      customerId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'customer',
+          key: 'customerId'
+        },
+        onDelete: 'CASCADE',
+      },
+      value: {
+        allowNull: false,
+        type: Sequelize.DECIMAL
+      },
+      date: {
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('now')
+      }
     });
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.dropTable('transactionCustomerStock');
+    await queryInterface.dropTable('customerTransaction');
   }
 };
