@@ -5,8 +5,7 @@
     "express-async-errors": "^3.1.1",
     "mysql2": "^2.3.3",
     "nodemon": "^2.0.19",
-    "sequelize": "^6.21.3",
-    "sequelize-cli": "^6.4.1"
+    "sequelize": "^6.21.3"
   },
   "name": "case-psel-xp-backend",
   "description": "Case denvolvido para o processo seletivo da XP Inc.",
@@ -30,6 +29,7 @@
   "devDependencies": {
     "eslint": "^8.19.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.26.0"
+    "eslint-plugin-import": "^2.26.0",
+    "sequelize-cli": "^6.4.1"
   }
 }
