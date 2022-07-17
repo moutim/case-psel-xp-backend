@@ -13,7 +13,13 @@ const returnFindOne = {
   },
 };
 
+const emailNotFound = { status: 404, message: 'Email not found' };
+
+const incorrectPassword = { status: 401, message: 'Incorrect password' };
+
 module.exports = {
   resultLogin,
   returnFindOne,
+  emailNotFound,
+  incorrectPassword,
 };
