@@ -9,7 +9,7 @@ const bcrypt = require('../../../src/utils/bcrypt');
 const jwt = require('../../../src/utils/JWT');
 chai.use(require('chai-as-promised'));
 
-describe('Verifica se a função "login" da camada de services tem os retornos esperados', () => {
+describe('Verifica os retornos da função login na camada de SERVICE', () => {
   describe('Quando encontra o cliente no banco', () => {
     afterEach(() => {
       customer.findOne.restore();
