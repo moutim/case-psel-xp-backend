@@ -11,6 +11,8 @@ app.use(express.json());
 
 app.use(require('./routes'));
 
+app.get('/', (req, res) => res.send('<h1> FUNCIONANDO </h1>'));
+
 app.use(middlewares.errorHandler);
 
 const PORT = process.env.PORT || 5000;
