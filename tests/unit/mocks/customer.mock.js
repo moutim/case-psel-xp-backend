@@ -6,6 +6,9 @@ const resultGetCustomerInfos = {
   balance: '150',
 };
 
+const customerNotFound = { status: 404, message: 'Customer with id 1 not found' };
+
 module.exports = {
   resultGetCustomerInfos,
+  customerNotFound,
 };
