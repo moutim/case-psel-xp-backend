@@ -16,9 +16,7 @@ const login = async ({ email, password }) => {
 
   const token = jwt.generateToken({ customerId: customerFound.dataValues.customerId });
 
-  delete customerFound.dataValues.password;
-
-  return { token, ...customerFound.dataValues };
+  return { token };
 };
 
 module.exports = {
