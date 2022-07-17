@@ -17,6 +17,22 @@ jobs:
 
         - name: Executa o lint para verificar se existem erros
           run: npx eslint .
+  testes:
+      runs-on: ubuntu-latest
+      steps:
+          - name: Verifica o repositório do Git
+            uses: actions/checkout@v2
+
+          - name: Instala o node com a versão
+            uses: actions/setup-node@v1
+            with:
+              node-version: 14
+
+          - name: Instala as dependências
+            run: npm install
+
+          - name: Executa todos os testes unitários
+            run: npm test
 
   # Aguarda implementacao de testes para executar esse job
   # tests:
