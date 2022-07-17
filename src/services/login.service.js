@@ -1,7 +1,7 @@
 const { StatusCodes } = require('http-status-codes');
 const { customer } = require('../database/models');
-const { comparePassword } = require('../utils/bcrypt');
-const { generateToken } = require('../utils/JWT');
+const bcrypt = require('../utils/bcrypt');
+const jwt = require('../utils/JWT');
 
 const login = async ({ email, password }) => {
   const customerFound = await customer.findOne({ where: { email } });
@@ -10,11 +10,11 @@ const login = async ({ email, password }) => {
     throw Object({ status: StatusCodes.NOT_FOUND, message: 'Email not found' });
   }
 
-  if (!comparePassword(password, customerFound.dataValues.password)) {
+  if (!bcrypt.comparePassword(password, customerFound.dataValues.password)) {
     throw Object({ status: StatusCodes.UNAUTHORIZED, message: 'Incorrect password' });
   }
 
-  const token = generateToken({ customerId: customerFound.dataValues.customerId });
+  const token = jwt.generateToken({ customerId: customerFound.dataValues.customerId });
 
   delete customerFound.dataValues.password;
 
