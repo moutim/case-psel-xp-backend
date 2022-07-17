@@ -27,7 +27,7 @@ describe('Verifica se a função "login" da camada de controllers tem os retorno
     expect(response.status.calledWith(200)).to.be.true;
   });
 
-  it('Deve retornar um JSON com as informações de login', async () => {
+  it('Deve retornar um JSON com o token de autorização', async () => {
     await controller.login(request, response);
     expect(response.json.calledWith(mocks.resultLogin)).to.be.true;
   });

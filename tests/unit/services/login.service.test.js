@@ -17,7 +17,7 @@ describe('Verifica se a função "login" da camada de services tem os retornos e
       jwt.generateToken.restore();
     });
 
-    it('Retorna um objeto com as informações do login', async () => {
+    it('Retorna um objeto com o token de autorização', async () => {
       sinon.stub(customer, 'findOne').resolves(mocks.returnFindOne);
       sinon.stub(bcrypt, 'comparePassword').returns(true);
       sinon.stub(jwt, 'generateToken').returns(mocks.resultLogin.token);
