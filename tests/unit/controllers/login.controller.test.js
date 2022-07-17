@@ -7,7 +7,7 @@ const controller = require('../../../src/controllers/login.controller');
 const service = require('../../../src/services/login.service');
 const mocks = require('../mocks/login.mock');
 
-describe('Verifica se a função "login" da camada de controllers tem os retornos esperados', () => {
+describe('Verifica os retornos da função login na camada de CONTROLLER', () => {
   const response = {};
   const request = {};
 
