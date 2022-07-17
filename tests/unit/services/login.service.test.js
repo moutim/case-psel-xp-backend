@@ -1,13 +1,15 @@
 const { describe, afterEach, it } = require('mocha');
 const sinon = require('sinon');
 const { expect } = require('chai');
+const chai = require('chai');
 const { customer } = require('../../../src/database/models');
 const mocks = require('../mocks/login.mock');
 const service = require('../../../src/services/login.service');
 const bcrypt = require('../../../src/utils/bcrypt');
 const jwt = require('../../../src/utils/JWT');
+chai.use(require('chai-as-promised'));
 
-describe('Verifica os retornos da função login na camada de SERVICE', () => {
+describe('Verifica se a função "login" da camada de services tem os retornos esperados', () => {
   describe('Quando encontra o cliente no banco', () => {
     afterEach(() => {
       customer.findOne.restore();
@@ -31,14 +33,11 @@ describe('Verifica os retornos da função login na camada de SERVICE', () => {
       customer.findOne.restore();
     });
 
-    it('Retorna um erro com "Email not found"', async () => {
-      sinon.stub(customer, 'findOne').resolves(false);
+    it('Retorna um erro com "Email not found"', () => {
+      sinon.stub(customer, 'findOne').resolves();
 
-      try {
-        await service.login({ email: 'testes@testes.com', password: 'testes' });
-      } catch (error) {
-        expect(error).to.be.deep.equal(mocks.emailNotFound);
-      }
+      expect(service.login({ email: 'testes@testes.com', password: 'testes' })).to.be
+        .rejectedWith('Email not found');
     });
   });
 
@@ -51,11 +50,8 @@ describe('Verifica os retornos da função login na camada de SERVICE', () => {
       sinon.stub(customer, 'findOne').resolves(mocks.returnFindOne);
       sinon.stub(bcrypt, 'comparePassword').returns(false);
 
-      try {
-        await service.login({ email: 'testes@testes.com', password: 'testes' });
-      } catch (error) {
-        expect(error).to.be.deep.equal(mocks.incorrectPassword);
-      }
+      expect(service.login({ email: 'testes@testes.com', password: 'testes' })).to.be
+        .rejectedWith('Incorrect password');
     });
   });
 });
