@@ -6,7 +6,7 @@ const walletCustomer = (sequelize, DataTypes) => {
     quantity: DataTypes.INTEGER,
     value: DataTypes.DECIMAL
   },
-  { timestamps: false }
+  { timestamps: false, freezeTableName: true, }
   );
 
   walletCustomerTable.associate = (models) => {

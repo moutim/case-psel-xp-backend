@@ -1,7 +1,12 @@
 const transactionTypeSchema = (sequelize, DataTypes) => {
   const transactionTypeTable = sequelize.define("transactionType", {
+    typeId: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
     type: DataTypes.STRING,
-  }, { timestamps: false } );
+  }, { timestamps: false, freezeTableName: true, } );
 
   transactionTypeTable.associate = (models) => {
     transactionTypeTable.hasOne(models.customerTransaction, { foreignKey: "typeId", as: "transaction" });
