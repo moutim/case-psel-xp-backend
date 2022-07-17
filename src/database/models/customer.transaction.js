@@ -3,7 +3,7 @@ const customerTransactionSchema = (sequelize, DataTypes) => {
     typeId: DataTypes.INTEGER,
     customerId: DataTypes.INTEGER,
     value: DataTypes.DECIMAL
-  }, { timestamps: false } );
+  }, { timestamps: false, freezeTableName: true, } );
 
   customerTransactionTable.associate = (models) => {
     customerTransactionTable.belongsTo(models.transactionType, { foreignKey: "typeId", as: "type" });

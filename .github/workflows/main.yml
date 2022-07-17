@@ -17,34 +17,31 @@ jobs:
 
         - name: Executa o lint para verificar se existem erros
           run: npx eslint .
+  tests:
+      runs-on: ubuntu-latest
+      env:
+        MYSQL_USER: root
+        MYSQL_PASSWORD: password
+        MYSQL_DATABASE: psel-xp-inc
+        MYSQL_PORT: 3306
+        HOSTNAME: localhost
+        DIALECT: mysql
+        SECRET: secret
+      steps:
+          - name: Verifica o repositório do Git
+            uses: actions/checkout@v2
 
-  # Aguarda implementacao de testes para executar esse job
-  # tests:
-  #     runs-on: ubuntu-latest
-  #     env:
-  #       MYSQL_USER: root
-  #       MYSQL_PASSWORD: password
-  #       MYSQL_DATABASE: PDV
-  #       MYSQL_PORT: 3306
-  #       HOSTNAME: localhost
-  #       DIALECT: mysql
-  #       SECRET: secret
-  #     steps:
-  #         - name: Verifica o repositório do Git
-  #           uses: actions/checkout@v2
+          - name: Inicia containers
+            run: docker-compose up -d
 
-  #         - name: Inicia containers
-  #           run: docker-compose up -d
+          - name: Instala as dependências
+            run: npm install
 
-  #         - name: Instala as dependências
-  #           run: npm install
+          - name: Executa Sequelize
+            run: npm run db:restore
 
-  #         - name: Executa Sequelize
-  #           run: npm run restore
+          - name: Executa todos os testes
+            run: npm test
 
-  #         - name: Executa todos os testes
-  #           run: npm test
-
-  #         - name: Para os containers
-  #           if: always()
-  #           run: docker-compose -f "docker-compose.yml" down
+          - name: Para os containers
+            run: docker-compose -f down
