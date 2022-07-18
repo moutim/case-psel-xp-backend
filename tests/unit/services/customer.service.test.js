@@ -36,3 +36,35 @@ describe('Verifica os retornos da função getCustomerInfos na camada de SERVICE
     });
   });
 });
+
+describe.only('Verifica os retornos da função updateCustomerInfos na camada de SERVICE', () => {
+  describe('Quando as informações são atualizadas', () => {
+    afterEach(() => {
+      customer.update.restore();
+    });
+
+    it('Retorna um objeto com a mensagem "Information updated successfully"', async () => {
+      sinon.stub(customer, 'update').resolves([true]);
+
+      const result = await service.updateCustomerInfos(1, { password: 'newPassword' });
+
+      expect(result).to.be.deep.equal(mocks.informationUpdated);
+    });
+  });
+
+  describe('Quando as informações NÃO são atualizadas', () => {
+    afterEach(() => {
+      customer.update.restore();
+    });
+
+    it('Retorna um erro com a mensagem "There was an error updating the information"', async () => {
+      sinon.stub(customer, 'update').resolves(false);
+
+      try {
+        await service.updateCustomerInfos(1, { password: 'newPassword' });
+      } catch (error) {
+        expect(error).to.be.deep.equal(mocks.informationNotUpdated);
+      }
+    });
+  });
+});
