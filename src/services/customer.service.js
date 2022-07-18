@@ -47,7 +47,7 @@ const withdraw = async (customerId, value) => {
 
     const transaction = await sequelize.transaction(async (t) => {
       const customerUpdate = await customer.update(
-        { balance: newBalance.toString() },
+        { balance: newBalance },
         { where: { customerId } },
         { transction: t },
       );
@@ -68,8 +68,41 @@ const withdraw = async (customerId, value) => {
   }
 };
 
+const deposit = async (customerId, value) => {
+  const customerFound = await customer.findOne({ where: { customerId } });
+
+  const customerBalance = parseFloat(customerFound.dataValues.balance);
+
+  try {
+    const newBalance = customerBalance + value;
+    const typeIdDeposit = 4;
+
+    const transaction = await sequelize.transaction(async (t) => {
+      const customerUpdate = await customer.update(
+        { balance: newBalance },
+        { where: { customerId } },
+        { transction: t },
+      );
+      const transactionCreate = await customerTransaction.create(
+        { typeId: typeIdDeposit, customerId, value },
+        { transaction: t },
+      );
+
+      if (customerUpdate && transactionCreate) return true;
+      return false;
+    });
+
+    if (transaction) return { message: 'Deposit made successfully' };
+
+    throw Error('An error occurred while performing the transaction');
+  } catch (error) {
+    throw Object({ status: StatusCodes.INTERNAL_SERVER_ERROR, message: error.message });
+  }
+};
+
 module.exports = {
   getCustomerInfos,
   updateCustomerInfos,
   withdraw,
+  deposit,
 };
