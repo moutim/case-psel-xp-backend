@@ -34,10 +34,7 @@ describe('Verifica os retornos da função getCustomerInfos na camada de CONTROL
 });
 
 describe('Verifica os retornos da função updateCustomerInfos na camada de CONTROLLER', () => {
-  const response = {
-    locals: { payload: { customerId: 1 } },
-    body: { password: 'newPassword', email: 'newEmail' },
-  };
+  const response = { locals: { payload: { customerId: 1 } } };
   const request = {};
 
   beforeEach(() => {
@@ -59,5 +56,31 @@ describe('Verifica os retornos da função updateCustomerInfos na camada de CONT
   it('Deve retornar um JSON com a mensagem "Information updated successfully"', async () => {
     await controller.updateCustomerInfos(request, response);
     expect(response.json.calledWith(mocks.informationUpdated)).to.be.true;
+  });
+});
+
+describe('Verifica os retornos da função withdraw na camada de CONTROLLER', () => {
+  const response = { locals: { payload: { customerId: 1 } } };
+  const request = { body: { value: 50 } };
+
+  beforeEach(() => {
+    response.status = sinon.stub().returns(response);
+    response.json = sinon.stub().returns();
+
+    sinon.stub(service, 'withdraw').resolves(mocks.withdrawSuccessful);
+  });
+
+  afterEach(() => {
+    service.withdraw.restore();
+  });
+
+  it('O status retornado deve ser 200', async () => {
+    await controller.withdraw(request, response);
+    expect(response.status.calledWith(200)).to.be.true;
+  });
+
+  it('Deve retornar um JSON com a mensagem "Withdraw successful"', async () => {
+    await controller.withdraw(request, response);
+    expect(response.json.calledWith(mocks.withdrawSuccessful)).to.be.true;
   });
 });
