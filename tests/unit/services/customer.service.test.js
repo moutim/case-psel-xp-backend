@@ -37,7 +37,7 @@ describe('Verifica os retornos da função getCustomerInfos na camada de SERVICE
   });
 });
 
-describe.only('Verifica os retornos da função updateCustomerInfos na camada de SERVICE', () => {
+describe('Verifica os retornos da função updateCustomerInfos na camada de SERVICE', () => {
   describe('Quando as informações são atualizadas', () => {
     afterEach(() => {
       customer.update.restore();
