@@ -56,7 +56,7 @@ describe('Verifica os retornos da função updateCustomerInfos na camada de CONT
     expect(response.status.calledWith(200)).to.be.true;
   });
 
-  it('Deve retornar um JSON com as informações do cliente', async () => {
+  it('Deve retornar um JSON com a mensagem "Information updated successfully"', async () => {
     await controller.updateCustomerInfos(request, response);
     expect(response.json.calledWith(mocks.informationUpdated)).to.be.true;
   });
