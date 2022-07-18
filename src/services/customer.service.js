@@ -46,17 +46,18 @@ const withdraw = async (customerId, value) => {
     const typeIdWithdraw = 3;
 
     const transaction = await sequelize.transaction(async (t) => {
-      await customer.update(
+      const customerUpdate = await customer.update(
         { balance: newBalance.toString() },
         { where: { customerId } },
         { transction: t },
       );
-      await customerTransaction.create(
+      const transactionCreate = await customerTransaction.create(
         { typeId: typeIdWithdraw, customerId, value },
         { transaction: t },
       );
 
-      return true;
+      if (customerUpdate && transactionCreate) return true;
+      return false;
     });
 
     if (transaction) return { message: 'Withdrawal successful' };
