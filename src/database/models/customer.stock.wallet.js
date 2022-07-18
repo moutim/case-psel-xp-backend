@@ -1,6 +1,11 @@
 const walletCustomer = (sequelize, DataTypes) => {
   const walletCustomerTable = sequelize.define("customerStockWallet", 
   {
+    customerStockId: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
     stockId: DataTypes.INTEGER,
     customerId: DataTypes.INTEGER,
     quantity: DataTypes.INTEGER,
