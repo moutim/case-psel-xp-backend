@@ -119,7 +119,47 @@ describe('Verifica os retornos da função withdraw na camada de SERVICE', () =>
       try {
         await service.withdraw(1, 50);
       } catch (error) {
-        expect(error).to.deep.equal(mocks.withdrawError);
+        expect(error).to.deep.equal(mocks.transactionError);
+      }
+    });
+  });
+});
+
+describe('Verifica os retornos da função deposit na camada de SERVICE', () => {
+  describe('Quando o deposito é realizado com sucesso', () => {
+    afterEach(() => {
+      customer.findOne.restore();
+      customer.update.restore();
+      customerTransaction.create.restore();
+    });
+
+    it('Retorna um objeto com a mensagem "Information updated successfully"', async () => {
+      sinon.stub(customer, 'findOne').resolves({ dataValues: { ...mocks.resultGetCustomerInfos } });
+      sinon.stub(customer, 'update').resolves(true);
+      sinon.stub(customerTransaction, 'create').resolves(true);
+
+      const result = await service.deposit(1, 50);
+
+      expect(result).to.be.deep.equal(mocks.depositMadeSuccessfully);
+    });
+  });
+
+  describe('Quando o deposito NÃO é realizado com sucesso', () => {
+    afterEach(() => {
+      customer.findOne.restore();
+      customer.update.restore();
+      customerTransaction.create.restore();
+    });
+
+    it('Retorna um erro com a mensagem "An error occurred while performing the transaction"', async () => {
+      sinon.stub(customer, 'findOne').resolves({ dataValues: { ...mocks.resultGetCustomerInfos } });
+      sinon.stub(customer, 'update').resolves(false);
+      sinon.stub(customerTransaction, 'create').resolves(false);
+
+      try {
+        await service.deposit(1, 50);
+      } catch (error) {
+        expect(error).to.deep.equal(mocks.transactionError);
       }
     });
   });
