@@ -16,7 +16,15 @@ const updateCustomerInfos = async (req, res) => {
   res.status(StatusCodes.OK).json(result);
 };
 
+const withdraw = async (req, res) => {
+  const { customerId } = res.locals.payload;
+  const result = await service.withdraw(customerId, req.body.value);
+
+  res.status(StatusCodes.OK).json(result);
+};
+
 module.exports = {
   getCustomerInfos,
   updateCustomerInfos,
+  withdraw,
 };
