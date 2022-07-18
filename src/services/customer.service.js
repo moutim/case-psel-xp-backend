@@ -20,8 +20,11 @@ const updateCustomerInfos = async (customerId, body) => {
   }
 
   try {
-    await customer.update({ ...infos }, { where: { customerId } });
-    return { message: 'Information updated successfully' };
+    const result = await customer.update({ ...infos }, { where: { customerId } });
+
+    if (result[0]) return { message: 'Information updated successfully' };
+
+    throw Error('There was an error updating the information');
   } catch (error) {
     throw Object({ status: StatusCodes.INTERNAL_SERVER_ERROR, message: error.message });
   }
