@@ -3,7 +3,7 @@ const transactionStockSchema = (sequelize, DataTypes) => {
     {
     stockId: DataTypes.INTEGER,
     customerId: DataTypes.INTEGER,
-    value: DataTypes.DECIMAL,
+    value: DataTypes.FLOAT(20, 2),
     quantity: DataTypes.INTEGER,
     typeId: DataTypes.INTEGER
     },

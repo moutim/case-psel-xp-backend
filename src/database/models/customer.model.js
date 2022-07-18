@@ -9,7 +9,7 @@ const customerSchema = (sequelize, DataTypes) => {
     lastName: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
-    balance: DataTypes.DECIMAL,
+    balance: DataTypes.FLOAT(15, 2),
   }, { timestamps: false, freezeTableName: true, } );
 
   customerTable.associate = (models) => {

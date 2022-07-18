@@ -25,7 +25,7 @@ module.exports = {
       },
       value: {
         allowNull: false,
-        type: Sequelize.DECIMAL
+        type: Sequelize.FLOAT(20, 2)
       },
       quantity: {
         allowNull: false,
