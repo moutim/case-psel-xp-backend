@@ -8,7 +8,10 @@ const resultGetCustomerInfos = {
 
 const customerNotFound = { status: 404, message: 'Customer with id 1 not found' };
 
+const informationUpdated = { message: 'Information updated successfully' };
+
 module.exports = {
   resultGetCustomerInfos,
   customerNotFound,
+  informationUpdated,
 };
