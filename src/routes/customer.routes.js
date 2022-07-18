@@ -10,4 +10,6 @@ routes.get('/infos', controller.getCustomerInfos);
 
 routes.post('/update', middlewares.verifyUpdateCustomer, controller.updateCustomerInfos);
 
+routes.post('/withdraw', middlewares.verifyWithdraw, controller.withdraw);
+
 module.exports = routes;
