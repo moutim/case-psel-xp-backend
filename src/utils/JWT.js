@@ -17,7 +17,7 @@ const authenticateToken = (token) => {
     const payload = jwt.verify(token, process.env.SECRET, jwtConfig);
     return payload;
   } catch (e) {
-    throw Object({ status: StatusCodes.UNAUTHORIZED, message: 'Invalid token' });
+    throw Object({ status: StatusCodes.UNAUTHORIZED, message: 'Invalid or expired token' });
   }
 };
 
