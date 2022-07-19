@@ -1,4 +1,6 @@
-const { describe, afterEach, it } = require('mocha');
+const {
+  describe, afterEach, it,
+} = require('mocha');
 const sinon = require('sinon');
 const { expect } = require('chai');
 const { customer, customerTransaction } = require('../../../src/database/models');
@@ -225,6 +227,60 @@ describe('Verifica os retornos da função getCustomerTransactions na camada de 
       } catch (error) {
         expect(error).to.deep.equal(mocks.transactionsNotFound);
       }
+    });
+  });
+});
+
+describe('Verifica os retornos da função getCustomerStocks na camada de SERVICE', () => {
+  describe('Quando a carteira e as transações de ações são encotradas', () => {
+    it('Retorna um objeto com stocksWallet e stocksTransactions', async () => {
+      const result = await service.getCustomerStocks(1);
+
+      expect(result).to.be.an('object');
+      expect(result).to.have.property('stocksWallet');
+      expect(result).to.have.property('stocksTransactions');
+    });
+
+    it('A chave stocksWallet deve ser um array de objetos', async () => {
+      const result = await service.getCustomerStocks(1);
+
+      expect(result.stocksWallet).to.be.an('array');
+      expect(result.stocksWallet[0]).to.be.an('object');
+      expect(result.stocksWallet[0]).to.have.property('stockId');
+      expect(result.stocksWallet[0]).to.have.property('name');
+      expect(result.stocksWallet[0]).to.have.property('quantity');
+      expect(result.stocksWallet[0]).to.have.property('value');
+      expect(result.stocksWallet[0]).to.have.property('companyName');
+      expect(result.stocksWallet[0]).to.have.property('date');
+    });
+
+    it('A chave stocksTransactions deve ser um array de objetos', async () => {
+      const result = await service.getCustomerStocks(1);
+
+      expect(result.stocksTransactions).to.be.an('array');
+      expect(result.stocksTransactions[0]).to.be.an('object');
+      expect(result.stocksTransactions[0]).to.have.property('transactionId');
+      expect(result.stocksTransactions[0]).to.have.property('name');
+      expect(result.stocksTransactions[0]).to.have.property('quantity');
+      expect(result.stocksTransactions[0]).to.have.property('value');
+      expect(result.stocksTransactions[0]).to.have.property('companyName');
+      expect(result.stocksTransactions[0]).to.have.property('date');
+      expect(result.stocksTransactions[0]).to.have.property('type');
+    });
+  });
+
+  describe('Quando a carteira e as transações de ações NÃO são encotradas', () => {
+    it("A chave stocksWallet deve conter uma mensagem com `You don't have any stocks in your wallet`", async () => {
+      const result = await service.getCustomerStocks(999);
+
+      expect(result.stocksWallet[0]).to.be.deep.equal(mocks.stocksErrors.stocksWallet[0]);
+    });
+
+    it('A chave stocksTransactions deve conter uma mensagem com `You have not executed any stock transactions yet`', async () => {
+      const result = await service.getCustomerStocks(999);
+
+      expect(result.stocksTransactions[0]).to.be.deep
+        .equal(mocks.stocksErrors.stocksTransactions[0]);
     });
   });
 });
