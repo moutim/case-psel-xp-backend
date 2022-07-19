@@ -8,7 +8,7 @@ module.exports = {
         lastName: 'Moutim',
         email: 'moutimg@gmail.com',
         password: '$2b$10$wYeJ4kRrLrrQK1hboCBh4uTeq.Vm9kgLgpNlWA/pW5/l6VRCz.xMq',
-        balance: 100000
+        balance: 1000
       },
       {
         firstName: 'Silvania',

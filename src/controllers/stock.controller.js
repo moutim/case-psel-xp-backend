@@ -7,6 +7,14 @@ const getStocks = async (req, res) => {
   res.status(StatusCodes.OK).json(stocks);
 };
 
+const buyStocks = async (req, res) => {
+  const { customerId } = res.locals.payload;
+  const result = await service.buyStocks(customerId, req.body);
+
+  res.status(StatusCodes.OK).json(result);
+};
+
 module.exports = {
   getStocks,
+  buyStocks,
 };

@@ -32,3 +32,29 @@ describe('Verifica os retornos da função getStocks na camada de CONTROLLER', (
     expect(response.json.calledWith(mocks.stocks)).to.be.true;
   });
 });
+
+describe('Verifica os retornos da função buyStocks na camada de CONTROLLER', () => {
+  const response = { locals: { payload: { customerId: 1 } } };
+  const request = { body: { stockId: 1, quantity: 1 } };
+
+  beforeEach(() => {
+    response.status = sinon.stub().returns(response);
+    response.json = sinon.stub().returns();
+
+    sinon.stub(service, 'buyStocks').resolves(mocks.buyMade);
+  });
+
+  afterEach(() => {
+    service.buyStocks.restore();
+  });
+
+  it('O status retornado deve ser 200', async () => {
+    await controller.buyStocks(request, response);
+    expect(response.status.calledWith(200)).to.be.true;
+  });
+
+  it('Deve retornar um JSON com a mensagem "Purchase successful" e o transactionId', async () => {
+    await controller.buyStocks(request, response);
+    expect(response.json.calledWith(mocks.buyMade)).to.be.true;
+  });
+});

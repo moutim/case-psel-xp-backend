@@ -3,6 +3,12 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.createTable('customerStockWallet', {
+      customerStockId: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
+      },
       stockId: {
         allowNull: false,
         type: Sequelize.INTEGER,
@@ -11,7 +17,6 @@ module.exports = {
           key: 'stockId'
         },
         onDelete: 'CASCADE',
-        primaryKey: true,
       },
       customerId: {
         allowNull: false,
@@ -21,7 +26,6 @@ module.exports = {
           key: 'customerId'
         },
         onDelete: 'CASCADE',
-        primaryKey: true,
       },
       quantity: {
         allowNull: false,

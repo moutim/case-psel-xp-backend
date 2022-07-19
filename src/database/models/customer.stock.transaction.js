@@ -1,11 +1,16 @@
 const transactionStockSchema = (sequelize, DataTypes) => {
   const transactionStockTable = sequelize.define("customerStockTransaction",
     {
-    stockId: DataTypes.INTEGER,
-    customerId: DataTypes.INTEGER,
-    value: DataTypes.FLOAT(20, 2),
-    quantity: DataTypes.INTEGER,
-    typeId: DataTypes.INTEGER
+      transactionId: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+      },
+      stockId: DataTypes.INTEGER,
+      customerId: DataTypes.INTEGER,
+      value: DataTypes.FLOAT(20, 2),
+      quantity: DataTypes.INTEGER,
+      typeId: DataTypes.INTEGER
     },
   { timestamps: false, freezeTableName: true, }
   );
