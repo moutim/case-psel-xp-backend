@@ -7,7 +7,8 @@ const customerTransactionSchema = (sequelize, DataTypes) => {
     },
     typeId: DataTypes.INTEGER,
     customerId: DataTypes.INTEGER,
-    value: DataTypes.FLOAT(20, 2)
+    value: DataTypes.FLOAT(20, 2),
+    date: DataTypes.DATE
   }, { timestamps: false, freezeTableName: true, } );
 
   customerTransactionTable.associate = (models) => {
