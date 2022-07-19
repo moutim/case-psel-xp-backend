@@ -18,4 +18,6 @@ routes.delete('/delete', controller.deleteCustomer);
 
 routes.get('/transaction', controller.getCustomerTransactions);
 
+routes.get('/stock', controller.getCustomerStocks);
+
 module.exports = routes;
