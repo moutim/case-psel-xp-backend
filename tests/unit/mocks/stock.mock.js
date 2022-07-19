@@ -30,6 +30,11 @@ const buyMade = {
   transactionId: 10,
 };
 
+const saleMade = {
+  message: 'Successful sale',
+  transactionId: 10,
+};
+
 const insufficientStocks = { status: 401, message: 'There are not enough stocks to make the purchase' };
 
 const insufficientBalance = { status: 401, message: 'Insufficient balance for this transaction' };
@@ -37,6 +42,8 @@ const insufficientBalance = { status: 401, message: 'Insufficient balance for th
 const customerStockWallet = { quantity: 10, value: 100 };
 
 const transactionError = { status: 500, message: 'An error occurred while performing the transaction' };
+
+const stocksNotAvailable = { status: 401, message: 'You have only 10 stocks available for sale' };
 
 module.exports = {
   stocks,
@@ -47,4 +54,6 @@ module.exports = {
   insufficientBalance,
   customerStockWallet,
   transactionError,
+  saleMade,
+  stocksNotAvailable,
 };
