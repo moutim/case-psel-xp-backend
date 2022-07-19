@@ -8,6 +8,6 @@ const middlewares = require('../middlewares');
 
 routes.get('/infos', controller.getCustomerInfos);
 
-routes.post('/update', middlewares.verifyUpdateCustomer, controller.updateCustomerInfos);
+routes.put('/update', middlewares.verifyUpdateCustomer, controller.updateCustomerInfos);
 
 module.exports = routes;
