@@ -164,3 +164,35 @@ describe('Verifica os retornos da função deposit na camada de SERVICE', () => 
     });
   });
 });
+
+describe('Verifica os retornos da função deleteCustomer na camada de SERVICE', () => {
+  describe('Quando o cliente é deletado com sucesso', () => {
+    afterEach(() => {
+      customer.destroy.restore();
+    });
+
+    it('Retorna um objeto com a mensagem "User successfully deleted"', async () => {
+      sinon.stub(customer, 'destroy').resolves(true);
+
+      const result = await service.deleteCustomer(1);
+
+      expect(result).to.be.deep.equal(mocks.customerDeleted);
+    });
+  });
+
+  describe('Quando o cliente NÃO é deletado com sucesso', () => {
+    afterEach(() => {
+      customer.destroy.restore();
+    });
+
+    it('Retorna um erro com a mensagem "There was an error deleting the user"', async () => {
+      sinon.stub(customer, 'destroy').resolves(false);
+
+      try {
+        await service.deleteCustomer(1);
+      } catch (error) {
+        expect(error).to.deep.equal(mocks.customerNotDeleted);
+      }
+    });
+  });
+});

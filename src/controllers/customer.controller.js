@@ -30,9 +30,17 @@ const deposit = async (req, res) => {
   res.status(StatusCodes.OK).json(result);
 };
 
+const deleteCustomer = async (req, res) => {
+  const { customerId } = res.locals.payload;
+  const result = await service.deleteCustomer(customerId);
+
+  res.status(StatusCodes.OK).json(result);
+};
+
 module.exports = {
   getCustomerInfos,
   updateCustomerInfos,
   withdraw,
   deposit,
+  deleteCustomer,
 };

@@ -20,6 +20,10 @@ const transactionError = { status: 500, message: 'An error occurred while perfor
 
 const insufficientBalance = { status: 401, message: 'Insufficient balance for this transaction' };
 
+const customerDeleted = { message: 'User successfully deleted' };
+
+const customerNotDeleted = { status: 400, message: 'There was an error deleting the user' };
+
 module.exports = {
   resultGetCustomerInfos,
   customerNotFound,
@@ -29,4 +33,6 @@ module.exports = {
   transactionError,
   insufficientBalance,
   depositMadeSuccessfully,
+  customerDeleted,
+  customerNotDeleted,
 };

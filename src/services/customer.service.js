@@ -100,9 +100,18 @@ const deposit = async (customerId, value) => {
   }
 };
 
+const deleteCustomer = async (customerId) => {
+  const customerDeleted = await customer.destroy({ where: { customerId } });
+
+  if (!customerDeleted) throw Object({ status: StatusCodes.BAD_REQUEST, message: 'There was an error deleting the user' });
+
+  return { message: 'User successfully deleted' };
+};
+
 module.exports = {
   getCustomerInfos,
   updateCustomerInfos,
   withdraw,
   deposit,
+  deleteCustomer,
 };
