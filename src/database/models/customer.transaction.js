@@ -1,8 +1,13 @@
 const customerTransactionSchema = (sequelize, DataTypes) => {
   const customerTransactionTable = sequelize.define("customerTransaction", {
+    transactionId: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
     typeId: DataTypes.INTEGER,
     customerId: DataTypes.INTEGER,
-    value: DataTypes.DECIMAL
+    value: DataTypes.FLOAT(20, 2)
   }, { timestamps: false, freezeTableName: true, } );
 
   customerTransactionTable.associate = (models) => {

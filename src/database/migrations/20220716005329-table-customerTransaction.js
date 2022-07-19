@@ -29,7 +29,7 @@ module.exports = {
       },
       value: {
         allowNull: false,
-        type: Sequelize.DECIMAL
+        type: Sequelize.FLOAT(20, 2)
       },
       date: {
         type: Sequelize.DATE,

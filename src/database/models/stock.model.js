@@ -6,7 +6,7 @@ const stockSchema = (sequelize, DataTypes) => {
       autoIncrement: true
     },
     name: DataTypes.STRING,
-    value: DataTypes.DECIMAL,
+    value: DataTypes.FLOAT(20, 2),
     quantity: DataTypes.INTEGER,
     companyId: DataTypes.INTEGER
   }, { timestamps: false, freezeTableName: true, } );

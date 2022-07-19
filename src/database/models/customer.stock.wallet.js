@@ -4,7 +4,7 @@ const walletCustomer = (sequelize, DataTypes) => {
     stockId: DataTypes.INTEGER,
     customerId: DataTypes.INTEGER,
     quantity: DataTypes.INTEGER,
-    value: DataTypes.DECIMAL
+    value: DataTypes.FLOAT(20, 2)
   },
   { timestamps: false, freezeTableName: true, }
   );
