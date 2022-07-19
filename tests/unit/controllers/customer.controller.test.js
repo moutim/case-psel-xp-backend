@@ -84,3 +84,29 @@ describe('Verifica os retornos da função withdraw na camada de CONTROLLER', ()
     expect(response.json.calledWith(mocks.withdrawSuccessful)).to.be.true;
   });
 });
+
+describe('Verifica os retornos da função deposit na camada de CONTROLLER', () => {
+  const response = { locals: { payload: { customerId: 1 } } };
+  const request = { body: { value: 50 } };
+
+  beforeEach(() => {
+    response.status = sinon.stub().returns(response);
+    response.json = sinon.stub().returns();
+
+    sinon.stub(service, 'deposit').resolves(mocks.depositMadeSuccessfully);
+  });
+
+  afterEach(() => {
+    service.deposit.restore();
+  });
+
+  it('O status retornado deve ser 200', async () => {
+    await controller.deposit(request, response);
+    expect(response.status.calledWith(200)).to.be.true;
+  });
+
+  it('Deve retornar um JSON com a mensagem "Deposit made successfully"', async () => {
+    await controller.deposit(request, response);
+    expect(response.json.calledWith(mocks.depositMadeSuccessfully)).to.be.true;
+  });
+});

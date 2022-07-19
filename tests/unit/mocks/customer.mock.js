@@ -14,7 +14,9 @@ const informationNotUpdated = { status: 500, message: 'There was an error updati
 
 const withdrawSuccessful = { message: 'Withdrawal successful' };
 
-const withdrawError = { status: 500, message: 'An error occurred while performing the transaction' };
+const depositMadeSuccessfully = { message: 'Deposit made successfully' };
+
+const transactionError = { status: 500, message: 'An error occurred while performing the transaction' };
 
 const insufficientBalance = { status: 401, message: 'Insufficient balance for this transaction' };
 
@@ -24,6 +26,7 @@ module.exports = {
   informationUpdated,
   informationNotUpdated,
   withdrawSuccessful,
-  withdrawError,
+  transactionError,
   insufficientBalance,
+  depositMadeSuccessfully,
 };

@@ -23,8 +23,16 @@ const withdraw = async (req, res) => {
   res.status(StatusCodes.OK).json(result);
 };
 
+const deposit = async (req, res) => {
+  const { customerId } = res.locals.payload;
+  const result = await service.deposit(customerId, req.body.value);
+
+  res.status(StatusCodes.OK).json(result);
+};
+
 module.exports = {
   getCustomerInfos,
   updateCustomerInfos,
   withdraw,
+  deposit,
 };
