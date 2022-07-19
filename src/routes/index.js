@@ -8,4 +8,6 @@ routes.use('/login', require('./login.routes'));
 
 routes.use('/customer', middlewares.authenticateToken, require('./customer.routes'));
 
+routes.use('/stock', middlewares.authenticateToken, require('./stock.routes'));
+
 module.exports = routes;
