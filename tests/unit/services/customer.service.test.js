@@ -196,3 +196,35 @@ describe('Verifica os retornos da função deleteCustomer na camada de SERVICE',
     });
   });
 });
+
+describe('Verifica os retornos da função getCustomerTransactions na camada de SERVICE', () => {
+  describe('Quando as transações são encontradas', () => {
+    afterEach(() => {
+      customerTransaction.findAll.restore();
+    });
+
+    it('Retorna um array de objetos com as transações', async () => {
+      sinon.stub(customerTransaction, 'findAll').resolves(mocks.customerTransactions);
+
+      const result = await service.getCustomerTransactions(1);
+
+      expect(result).to.be.deep.equal(mocks.customerTransactions);
+    });
+  });
+
+  describe('Quando as transações NÃO são encontradas', () => {
+    afterEach(() => {
+      customerTransaction.findAll.restore();
+    });
+
+    it('Retorna um erro com a mensagem "There was an error deleting the user"', async () => {
+      sinon.stub(customerTransaction, 'findAll').resolves([]);
+
+      try {
+        await service.getCustomerTransactions(1);
+      } catch (error) {
+        expect(error).to.deep.equal(mocks.transactionsNotFound);
+      }
+    });
+  });
+});
