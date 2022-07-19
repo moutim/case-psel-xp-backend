@@ -8,4 +8,6 @@ routes.get('/', controller.getStocks);
 
 routes.post('/buy', controller.buyStocks);
 
+routes.post('/sell', controller.sellStocks);
+
 module.exports = routes;
