@@ -24,6 +24,29 @@ const customerDeleted = { message: 'User successfully deleted' };
 
 const customerNotDeleted = { status: 400, message: 'There was an error deleting the user' };
 
+const customerTransactions = [
+  {
+    transactionId: 1,
+    customerId: 1,
+    value: 60,
+    date: '2022-07-19T05:19:40.000Z',
+    type: {
+      type: 'saque',
+    },
+  },
+  {
+    transactionId: 2,
+    customerId: 1,
+    value: 70,
+    date: '2022-07-19T05:19:40.000Z',
+    type: {
+      type: 'deposito',
+    },
+  },
+];
+
+const transactionsNotFound = { status: 404, message: "You don't have transactions yet" };
+
 module.exports = {
   resultGetCustomerInfos,
   customerNotFound,
@@ -35,4 +58,6 @@ module.exports = {
   depositMadeSuccessfully,
   customerDeleted,
   customerNotDeleted,
+  customerTransactions,
+  transactionsNotFound,
 };
