@@ -4,6 +4,10 @@ const routes = express.Router();
 
 const controller = require('../controllers/customer.controller');
 
-routes.get('/', controller.getCustomerInfos);
+const middlewares = require('../middlewares');
+
+routes.get('/infos', controller.getCustomerInfos);
+
+routes.put('/update', middlewares.verifyUpdateCustomer, controller.updateCustomerInfos);
 
 module.exports = routes;

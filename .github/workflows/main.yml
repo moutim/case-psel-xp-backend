@@ -44,4 +44,4 @@ jobs:
             run: npm test
 
           - name: Para os containers
-            run: docker-compose -f down
+            run: docker-compose down
