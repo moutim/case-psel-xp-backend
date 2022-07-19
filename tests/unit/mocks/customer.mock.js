@@ -47,6 +47,35 @@ const customerTransactions = [
 
 const transactionsNotFound = { status: 404, message: "You don't have transactions yet" };
 
+const customerStocks = {
+  stocksWallet: [
+    {
+      stockId: 1,
+      name: 'PETR4',
+      quantity: 10,
+      value: 269.5,
+      companyName: 'BR Petrobras',
+      date: '2022-07-19T18:56:19.000Z',
+    },
+  ],
+  stocksTransactions: [
+    {
+      transactionId: 1,
+      name: 'PETR4',
+      quantity: 10,
+      value: 269.5,
+      companyName: 'BR Petrobras',
+      type: 'compra',
+      date: '2022-07-19T18:56:19.000Z',
+    },
+  ],
+};
+
+const stocksErrors = {
+  stocksWallet: [{ message: "You don't have any stocks in your wallet" }],
+  stocksTransactions: [{ message: "'You have not executed any stock transactions yet'" }],
+};
+
 module.exports = {
   resultGetCustomerInfos,
   customerNotFound,
@@ -60,4 +89,6 @@ module.exports = {
   customerNotDeleted,
   customerTransactions,
   transactionsNotFound,
+  customerStocks,
+  stocksErrors,
 };
