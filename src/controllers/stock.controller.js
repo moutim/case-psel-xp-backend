@@ -14,7 +14,15 @@ const buyStocks = async (req, res) => {
   res.status(StatusCodes.OK).json(result);
 };
 
+const sellStocks = async (req, res) => {
+  const { customerId } = res.locals.payload;
+  const result = await service.sellStocks(customerId, req.body);
+
+  res.status(StatusCodes.OK).json(result);
+};
+
 module.exports = {
   getStocks,
   buyStocks,
+  sellStocks,
 };
