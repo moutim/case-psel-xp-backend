@@ -98,6 +98,71 @@ const buyStocks = async (customerId, stockInfo) => {
     });
 
     if (transaction) return { message: 'Successful purchase', transactionId: transaction.transactionId };
+
+    throw Error('An error occurred while performing the transaction');
+  } catch (error) {
+    throw Object({ status: StatusCodes.INTERNAL_SERVER_ERROR, message: error.message });
+  }
+};
+
+const sellStocks = async (customerId, stockInfo) => {
+  const { stockId, quantity } = stockInfo;
+
+  const customerInfos = await customerService.getCustomerInfos(customerId);
+
+  // Verifica se a ação existe
+  const stockFound = await stock.findOne({ where: { stockId } });
+  if (!stockFound) throw Object({ status: StatusCodes.NOT_FOUND, message: `Stock with id ${stockId} not found` });
+
+  const stocksValue = stockFound.dataValues.value * quantity;
+
+  // Verifica se o cliente tem ações suficientes para venda
+  const customerWallet = await customerStockWallet.findOne({ where: { customerId, stockId } });
+  if (quantity > customerWallet.dataValues.quantity) {
+    throw Object({ status: StatusCodes.UNAUTHORIZED, message: `You have only ${customerWallet.dataValues.quantity} stocks available for sale` });
+  }
+
+  try {
+    const typeIdSell = 2;
+
+    const transaction = await sequelize.transaction(async (t) => {
+      // Atualiza balance do cliente
+      const updateBalance = await customer.update(
+        { balance: customerInfos.dataValues.balance + stocksValue },
+        { where: { customerId } },
+        { transaction: t },
+      );
+
+      // Atualiza quantidade de stocks na tabela
+      const updateStock = await stock.update(
+        { quantity: stockFound.dataValues.quantity + quantity },
+        { where: { stockId } },
+        { transaction: t },
+      );
+
+      // Cria registro da compra
+      const createStockTransaction = await customerStockTransaction.create({
+        customerId, stockId, value: stocksValue, quantity, typeId: typeIdSell,
+      }, { transaction: t });
+
+      // Atualiza carteira do cliente
+      const updateWallet = await customerStockWallet.update(
+        {
+          quantity: customerWallet.dataValues.quantity - quantity,
+          value: customerWallet.dataValues.value - stocksValue,
+        },
+        { where: { customerId, stockId } },
+        { transaction: t },
+      );
+
+      if (updateBalance && updateStock && createStockTransaction && updateWallet) {
+        return { transactionId: createStockTransaction.dataValues.transactionId };
+      }
+      return false;
+    });
+
+    if (transaction) return { message: 'Successful sale', transactionId: transaction.transactionId };
+
     throw Error('An error occurred while performing the transaction');
   } catch (error) {
     throw Object({ status: StatusCodes.INTERNAL_SERVER_ERROR, message: error.message });
@@ -107,4 +172,5 @@ const buyStocks = async (customerId, stockInfo) => {
 module.exports = {
   getStocks,
   buyStocks,
+  sellStocks,
 };
