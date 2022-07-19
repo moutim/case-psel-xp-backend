@@ -136,3 +136,29 @@ describe('Verifica os retornos da função deleteCustomer na camada de CONTROLLE
     expect(response.json.calledWith(mocks.customerDeleted)).to.be.true;
   });
 });
+
+describe('Verifica os retornos da função getCustomerTransactions na camada de CONTROLLER', () => {
+  const response = { locals: { payload: { customerId: 1 } } };
+  const request = {};
+
+  beforeEach(() => {
+    response.status = sinon.stub().returns(response);
+    response.json = sinon.stub().returns();
+
+    sinon.stub(service, 'getCustomerTransactions').resolves(mocks.customerTransactions);
+  });
+
+  afterEach(() => {
+    service.getCustomerTransactions.restore();
+  });
+
+  it('O status retornado deve ser 200', async () => {
+    await controller.getCustomerTransactions(request, response);
+    expect(response.status.calledWith(200)).to.be.true;
+  });
+
+  it('Deve retornar um JSON com todas as transações do cliente', async () => {
+    await controller.getCustomerTransactions(request, response);
+    expect(response.json.calledWith(mocks.customerTransactions)).to.be.true;
+  });
+});
