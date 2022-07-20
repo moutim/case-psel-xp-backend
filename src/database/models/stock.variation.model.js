@@ -14,7 +14,7 @@ const stockVariationSchema = (sequelize, DataTypes) => {
   }, { timestamps: false, freezeTableName: true, } );
 
   stockVatiationTable.associate = (models) => {
-    stockVatiationTable.belongsTo(models.variationType, { foreignKey: "typeId", as: "variation" });
+    stockVatiationTable.belongsTo(models.variationType, { foreignKey: "typeId", as: "type" });
 
     stockVatiationTable.belongsTo(models.stock, { foreignKey: "stockId", as: "stock" });
   }
