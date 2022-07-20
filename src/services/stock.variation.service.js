@@ -20,16 +20,16 @@ const variationStock = async () => {
     // Número flutuante aleatório de 0 a 4 que determinará qual a porcentagem a ser calculada
     const percentage = parseFloat((Math.random() * 4).toFixed(2));
 
-    // Número inteiro aleatório de 0 a 1 que determinará se soma ou subtrai
-    const addOrSubtract = Math.random() * 2;
-
+    // Número inteiro aleatório de 0 a 100 que determinará se soma ou subtrai
+    const addOrSubtract = Math.floor(Math.random() * 100);
+    console.log(addOrSubtract);
     // Valor total a ser somado ou subtraido a partir da porcentagem e do valor atual da ação
     const valueToBeCalculed = ((value * percentage) / 100);
 
     // Subtrai valor total do valor da ação
 
-    // Se o numero aleatorio gerador for maior que 1 o valor é somado se nao é subtraido
-    if (addOrSubtract > 1) {
+    // Se o numero aleatorio gerador for maior que 50 o valor é somado se nao é subtraido
+    if (addOrSubtract > 49) {
       newPrice = value + valueToBeCalculed;
       oneForUpTwoForDown = 1;
     } else newPrice = value - valueToBeCalculed;
@@ -40,6 +40,25 @@ const variationStock = async () => {
         { where: { stockId } },
         { transaction: t },
       );
+
+      const stockAlreadyHasVariation = await stockVariation.findOne({ where: { stockId } });
+      if (stockAlreadyHasVariation) {
+        const updateStockVariation = await stockVariation.update(
+          {
+            typeId: oneForUpTwoForDown,
+            percentage,
+            oldPrice: value,
+            newPrice: parseFloat(newPrice.toFixed(2)),
+          },
+          {
+            where: { stockId },
+          },
+          { transaction: t },
+        );
+
+        if (updateStock && updateStockVariation) return true;
+        return false;
+      }
 
       const createVariationRegister = await stockVariation.create(
         {
