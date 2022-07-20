@@ -76,7 +76,7 @@ const buyStocks = async (customerId, stockInfo) => {
             quantity: customerHasStocks.dataValues.quantity + quantity,
             value: customerHasStocks.dataValues.value + stocksValue,
           },
-          { where: { customerId, stockId } },
+          { where: { [Op.and]: [{ customerId }, { stockId }] } },
           { transaction: t },
         );
 
