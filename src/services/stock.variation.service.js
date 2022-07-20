@@ -6,11 +6,14 @@ const config = require('../database/config/config');
 const sequelize = new Sequelize(config.development);
 
 const variationStock = async () => {
+  // Cria variavel para colocar situacao da funcao pois o forEach nao retorna nada
+  // let functionSituation;
+
   // Encontra todas as ações
   const stocks = await stock.findAll();
 
   // Passa por todas as ações
-  stocks.forEach(async ({ dataValues: { value, stockId } }) => {
+  const resultUpdateStocks = stocks.every(async ({ dataValues: { value, stockId } }) => {
     let oneForUpTwoForDown = 2;
     let newPrice;
 
@@ -31,36 +34,35 @@ const variationStock = async () => {
       oneForUpTwoForDown = 1;
     } else newPrice = value - valueToBeCalculed;
 
-    try {
-      const transaction = await sequelize.transaction(async (t) => {
-        const updateStock = await stock.update(
-          { value: newPrice },
-          { where: { stockId } },
-          { transaction: t },
-        );
+    const transaction = await sequelize.transaction(async (t) => {
+      const updateStock = await stock.update(
+        { value: newPrice },
+        { where: { stockId } },
+        { transaction: t },
+      );
 
-        const createVariationRegister = await stockVariation.create(
-          {
-            stockId,
-            typeId: oneForUpTwoForDown,
-            percentage,
-            oldPrice: value,
-            newPrice: parseFloat(newPrice.toFixed(2)),
-          },
-          { transaction: t },
-        );
+      const createVariationRegister = await stockVariation.create(
+        {
+          stockId,
+          typeId: oneForUpTwoForDown,
+          percentage,
+          oldPrice: value,
+          newPrice: parseFloat(newPrice.toFixed(2)),
+        },
+        { transaction: t },
+      );
 
-        if (updateStock && createVariationRegister) return true;
-        return false;
-      });
-
-      if (transaction) return true;
-      throw Error('There was an error updating stock price');
-    } catch (error) {
-      console.log(error.message);
+      if (updateStock && createVariationRegister) return true;
       return false;
-    }
+    });
+
+    if (transaction) return false;
+    return false;
   });
+
+  if (resultUpdateStocks) return 'Stocks price updated successfully';
+
+  return 'There was an error updating stocks price';
 };
 
 module.exports = variationStock;
