@@ -2,7 +2,13 @@ const { StatusCodes } = require('http-status-codes');
 const { Op } = require('sequelize');
 const Sequelize = require('sequelize');
 const {
-  stock, company, customerStockWallet, customerStockTransaction, customer,
+  stock,
+  company,
+  customerStockWallet,
+  customerStockTransaction,
+  customer,
+  stockVariation,
+  variationType,
 } = require('../database/models');
 const customerService = require('./customer.service');
 const config = require('../database/config/config');
@@ -12,7 +18,15 @@ const sequelize = new Sequelize(config.development);
 const getStocks = async () => {
   const stocks = await stock.findAll({
     where: { quantity: { [Op.gt]: 0 } },
-    include: { model: company, as: 'company' },
+    include: [
+      { model: company, as: 'company' },
+      {
+        model: stockVariation,
+        as: 'variation',
+        attributes: ['percentage', 'oldPrice', 'date'],
+        include: { model: variationType, as: 'type' },
+      },
+    ],
     attributes: { exclude: 'companyId' },
   });
 
