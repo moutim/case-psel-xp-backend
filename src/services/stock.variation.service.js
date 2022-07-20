@@ -20,9 +20,9 @@ const variationStock = async () => {
     // Número flutuante aleatório de 0 a 4 que determinará qual a porcentagem a ser calculada
     const percentage = parseFloat((Math.random() * 4).toFixed(2));
 
-    // Número inteiro aleatório de 0 a 100 que determinará se soma ou subtrai
+    // Número inteiro aleatório de 0 a 99 que determinará se soma ou subtrai
     const addOrSubtract = Math.floor(Math.random() * 100);
-    console.log(addOrSubtract);
+
     // Valor total a ser somado ou subtraido a partir da porcentagem e do valor atual da ação
     const valueToBeCalculed = ((value * percentage) / 100);
 
@@ -35,20 +35,28 @@ const variationStock = async () => {
     } else newPrice = value - valueToBeCalculed;
 
     const transaction = await sequelize.transaction(async (t) => {
+      // Atualiza preço da ação na tabela
       const updateStock = await stock.update(
         { value: newPrice },
         { where: { stockId } },
         { transaction: t },
       );
 
+      // Verifica se ação já possui registro na tabela
       const stockAlreadyHasVariation = await stockVariation.findOne({ where: { stockId } });
       if (stockAlreadyHasVariation) {
+        // Se tiver, apenas altera os valores
         const updateStockVariation = await stockVariation.update(
           {
             typeId: oneForUpTwoForDown,
             percentage,
             oldPrice: value,
             newPrice: parseFloat(newPrice.toFixed(2)),
+            high: parseFloat(newPrice.toFixed(2)) > stockAlreadyHasVariation.dataValues.high
+              ? parseFloat(newPrice.toFixed(2)) : stockAlreadyHasVariation.dataValues.high,
+            low: parseFloat(newPrice.toFixed(2)) < stockAlreadyHasVariation.dataValues.low
+              ? parseFloat(newPrice.toFixed(2)) : stockAlreadyHasVariation.dataValues.low,
+            date: new Date(),
           },
           {
             where: { stockId },
@@ -60,6 +68,7 @@ const variationStock = async () => {
         return false;
       }
 
+      // Se não tiver registro, cria novo registro com os valores
       const createVariationRegister = await stockVariation.create(
         {
           stockId,
@@ -67,6 +76,9 @@ const variationStock = async () => {
           percentage,
           oldPrice: value,
           newPrice: parseFloat(newPrice.toFixed(2)),
+          high: parseFloat(newPrice.toFixed(2)),
+          low: parseFloat(newPrice.toFixed(2)),
+          date: new Date(),
         },
         { transaction: t },
       );

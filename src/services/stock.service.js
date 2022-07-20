@@ -76,7 +76,7 @@ const buyStocks = async (customerId, stockInfo) => {
 
       // Cria registro da compra
       const createStockTransaction = await customerStockTransaction.create({
-        customerId, stockId, value: stocksValue, quantity, typeId: typeIdBuy,
+        customerId, stockId, value: stocksValue, quantity, typeId: typeIdBuy, date: new Date(),
       }, { transaction: t });
 
       // Verifica se o cliente já possui alguma ação
@@ -89,6 +89,7 @@ const buyStocks = async (customerId, stockInfo) => {
           {
             quantity: customerHasStocks.dataValues.quantity + quantity,
             value: customerHasStocks.dataValues.value + stocksValue,
+            date: new Date(),
           },
           { where: { [Op.and]: [{ customerId }, { stockId }] } },
           { transaction: t },
@@ -102,7 +103,7 @@ const buyStocks = async (customerId, stockInfo) => {
 
       // Cria nova ação na carteira do cliente
       const createStockWallet = await customerStockWallet.create({
-        customerId, stockId, quantity, value: stocksValue,
+        customerId, stockId, quantity, value: stocksValue, date: new Date(),
       }, { transaction: t });
 
       if (updateBalance && updateStock && createStockTransaction && createStockWallet) {
@@ -156,7 +157,7 @@ const sellStocks = async (customerId, stockInfo) => {
 
       // Cria registro da compra
       const createStockTransaction = await customerStockTransaction.create({
-        customerId, stockId, value: stocksValue, quantity, typeId: typeIdSell,
+        customerId, stockId, value: stocksValue, quantity, typeId: typeIdSell, date: new Date(),
       }, { transaction: t });
 
       // Atualiza carteira do cliente
@@ -164,6 +165,7 @@ const sellStocks = async (customerId, stockInfo) => {
         {
           quantity: customerWallet.dataValues.quantity - quantity,
           value: customerWallet.dataValues.value - stocksValue,
+          date: new Date(),
         },
         { where: { customerId, stockId } },
         { transaction: t },
