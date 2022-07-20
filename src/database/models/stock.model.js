@@ -13,6 +13,8 @@ const stockSchema = (sequelize, DataTypes) => {
 
   stockTable.associate = (models) => {
     stockTable.belongsTo(models.company, { foreignKey: "companyId", as: "company" });
+
+    stockTable.hasOne(models.stockVariation, { foreignKey: "stockId", as: "variation" });
   }
 
   return stockTable;
