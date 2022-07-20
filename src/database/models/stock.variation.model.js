@@ -9,6 +9,8 @@ const stockVariationSchema = (sequelize, DataTypes) => {
     percentage: DataTypes.FLOAT(20, 2),
     oldPrice: DataTypes.FLOAT(20, 2),
     newPrice: DataTypes.FLOAT(20, 2),
+    high: DataTypes.FLOAT(20, 2),
+    low: DataTypes.FLOAT(20,2),
     date: DataTypes.DATE,
     typeId: DataTypes.INTEGER
   }, { timestamps: false, freezeTableName: true, } );
