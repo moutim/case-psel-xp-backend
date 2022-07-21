@@ -44,6 +44,13 @@ const getCustomerTransactions = async (req, res) => {
   res.status(StatusCodes.OK).json(transactions);
 };
 
+const getCustomerStocks = async (req, res) => {
+  const { customerId } = res.locals.payload;
+  const stocks = await service.getCustomerStocks(customerId);
+
+  res.status(StatusCodes.OK).json(stocks);
+};
+
 module.exports = {
   getCustomerInfos,
   updateCustomerInfos,
@@ -51,4 +58,5 @@ module.exports = {
   deposit,
   deleteCustomer,
   getCustomerTransactions,
+  getCustomerStocks,
 };

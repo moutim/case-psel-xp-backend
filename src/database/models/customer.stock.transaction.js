@@ -22,7 +22,7 @@ const transactionStockSchema = (sequelize, DataTypes) => {
       through: transactionStockTable,
       foreignKey: 'customerId',
       otherKey: 'stockId',
-      as: 'customer'
+      as: 'stockTransactions'
     });
 
     models.stock.belongsToMany(models.customer, {

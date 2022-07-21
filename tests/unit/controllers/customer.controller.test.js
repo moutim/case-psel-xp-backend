@@ -162,3 +162,29 @@ describe('Verifica os retornos da função getCustomerTransactions na camada de 
     expect(response.json.calledWith(mocks.customerTransactions)).to.be.true;
   });
 });
+
+describe('Verifica os retornos da função getCustomerStocks na camada de CONTROLLER', () => {
+  const response = { locals: { payload: { customerId: 1 } } };
+  const request = {};
+
+  beforeEach(() => {
+    response.status = sinon.stub().returns(response);
+    response.json = sinon.stub().returns();
+
+    sinon.stub(service, 'getCustomerStocks').resolves(mocks.customerStocks);
+  });
+
+  afterEach(() => {
+    service.getCustomerStocks.restore();
+  });
+
+  it('O status retornado deve ser 200', async () => {
+    await controller.getCustomerStocks(request, response);
+    expect(response.status.calledWith(200)).to.be.true;
+  });
+
+  it('Deve retornar um JSON com todas a carteira e as transações de ações do cliente', async () => {
+    await controller.getCustomerStocks(request, response);
+    expect(response.json.calledWith(mocks.customerStocks)).to.be.true;
+  });
+});

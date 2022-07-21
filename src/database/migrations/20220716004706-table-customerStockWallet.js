@@ -34,7 +34,11 @@ module.exports = {
       value: {
         allowNull: false,
         type: Sequelize.FLOAT(20, 2)
-      }
+      },
+      date: {
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn('now')
+      },
     });
   },
 

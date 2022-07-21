@@ -1,6 +1,9 @@
 const { StatusCodes } = require('http-status-codes');
 const Sequelize = require('sequelize');
-const { customer, customerTransaction, transactionType } = require('../database/models');
+const { QueryTypes } = require('sequelize');
+const {
+  customer, customerTransaction, transactionType,
+} = require('../database/models');
 const bcrypt = require('../utils/bcrypt');
 const config = require('../database/config/config');
 
@@ -120,6 +123,62 @@ const getCustomerTransactions = async (customerId) => {
   return transactions;
 };
 
+const getCustomerStocks = async (customerId) => {
+  const stocksWallet = await sequelize.query(
+    `SELECT 
+        a.stockId,
+        b.name,
+        a.quantity,
+        a.value,
+        c.name AS "companyName",
+        a.date
+    FROM customerStockWallet AS a
+    INNER JOIN stock AS b
+    ON a.stockId = b.stockId
+    INNER JOIN company AS c
+    ON b.companyId = c.companyId
+    WHERE a.customerId = ?
+    AND a.quantity > 0;`,
+    {
+      replacements: [customerId],
+      type: QueryTypes.SELECT,
+    },
+  );
+
+  if (stocksWallet.length === 0) {
+    stocksWallet.push({ message: "You don't have any stocks in your wallet" });
+  }
+
+  const stocksTransactions = await sequelize.query(
+    `SELECT 
+      a.transactionId,
+      c.name,
+      a.quantity,
+      a.value,
+      d.name AS "companyName",
+      b.type,
+      a.date
+    FROM customerStockTransaction AS a
+    INNER JOIN transactionType AS b
+    ON a.typeId = b.typeId
+    INNER JOIN stock AS c
+    ON c.stockId = a.stockId
+    INNER JOIN company AS d
+    ON c.companyId = d.companyId
+    WHERE a.customerId = ?;`,
+    {
+      replacements: [customerId],
+      type: QueryTypes.SELECT,
+    },
+  );
+
+  if (stocksTransactions.length === 0) {
+    stocksTransactions.push({ message: "'You have not executed any stock transactions yet'" });
+  }
+
+  return { stocksWallet, stocksTransactions };
+};
+
 module.exports = {
   getCustomerInfos,
   updateCustomerInfos,
@@ -127,4 +186,5 @@ module.exports = {
   deposit,
   deleteCustomer,
   getCustomerTransactions,
+  getCustomerStocks,
 };
