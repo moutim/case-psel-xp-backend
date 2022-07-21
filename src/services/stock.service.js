@@ -3,12 +3,9 @@ const { Op } = require('sequelize');
 const Sequelize = require('sequelize');
 const {
   stock,
-  company,
   customerStockWallet,
   customerStockTransaction,
   customer,
-  stockVariation,
-  variationType,
 } = require('../database/models');
 const customerService = require('./customer.service');
 const config = require('../database/config/config');
@@ -16,19 +13,40 @@ const config = require('../database/config/config');
 const sequelize = new Sequelize(config.development);
 
 const getStocks = async () => {
-  const stocks = await stock.findAll({
-    where: { quantity: { [Op.gt]: 0 } },
-    include: [
-      { model: company, as: 'company' },
-      {
-        model: stockVariation,
-        as: 'variation',
-        attributes: ['percentage', 'oldPrice', 'date'],
-        include: { model: variationType, as: 'type' },
-      },
-    ],
-    attributes: { exclude: 'companyId' },
-  });
+  const stocks = await sequelize.query(
+    `SELECT
+      a.stockId,
+      a.name,
+      a.value,
+      a.quantity,
+      c.name AS "companyName",
+      d.percentage AS "percentageVariation",
+      d.high,
+      d.low,
+      d.oldPrice,
+      e.type AS "typeVariation",
+      SUM(a.value * b.quantity) AS "totalInvested"
+    FROM stock AS a
+    LEFT JOIN customerStockWallet AS b
+    ON a.stockId = b.stockId
+    INNER JOIN company AS c
+    ON a.companyId = c.companyId
+    INNER JOIN stockVariation AS d
+    ON a.stockId = d.stockId
+    INNER JOIN variationType AS e
+    ON d.typeId = e.typeId
+    WHERE a.quantity > 0
+    GROUP BY 
+      a.stockId,
+      d.high,
+      d.low,
+      d.oldPrice,
+      d.percentage,
+      e.type;`,
+    {
+      type: Sequelize.QueryTypes.SELECT,
+    },
+  );
 
   if (stocks.length === 0) throw Object({ status: StatusCodes.NOT_FOUND, message: 'There are no stocks available at the moment' });
 
@@ -107,12 +125,25 @@ const buyStocks = async (customerId, stockInfo) => {
       }, { transaction: t });
 
       if (updateBalance && updateStock && createStockTransaction && createStockWallet) {
-        return { transactionId: createStockTransaction.dataValues.transactionId };
+        return {
+          transactionId: createStockTransaction.dataValues.transactionId,
+          customerId,
+          stockId,
+          quantity,
+        };
       }
       return false;
     });
 
-    if (transaction) return { message: 'Successful purchase', transactionId: transaction.transactionId };
+    if (transaction) {
+      return {
+        message: 'Successful purchase',
+        transactionId: transaction.transactionId,
+        customerId,
+        stockId,
+        quantity,
+      };
+    }
 
     throw Error('An error occurred while performing the transaction');
   } catch (error) {
@@ -172,12 +203,25 @@ const sellStocks = async (customerId, stockInfo) => {
       );
 
       if (updateBalance && updateStock && createStockTransaction && updateWallet) {
-        return { transactionId: createStockTransaction.dataValues.transactionId };
+        return {
+          transactionId: createStockTransaction.dataValues.transactionId,
+          customerId,
+          stockId,
+          quantity,
+        };
       }
       return false;
     });
 
-    if (transaction) return { message: 'Successful sale', transactionId: transaction.transactionId };
+    if (transaction) {
+      return {
+        message: 'Successful sale',
+        transactionId: transaction.transactionId,
+        customerId,
+        stockId,
+        quantity,
+      };
+    }
 
     throw Error('An error occurred while performing the transaction');
   } catch (error) {

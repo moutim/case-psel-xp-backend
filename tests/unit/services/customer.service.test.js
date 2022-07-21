@@ -77,7 +77,7 @@ describe('Verifica os retornos da função withdraw na camada de SERVICE', () =>
       customer.findOne.restore();
     });
 
-    it('Retorna um objeto com a mensagem "Information updated successfully"', async () => {
+    it('Retorna um objeto com a mensagem "Insufficient balance"', async () => {
       sinon.stub(customer, 'findOne').resolves({ dataValues: { ...mocks.resultGetCustomerInfos } });
 
       try {
@@ -95,10 +95,10 @@ describe('Verifica os retornos da função withdraw na camada de SERVICE', () =>
       customerTransaction.create.restore();
     });
 
-    it('Retorna um objeto com a mensagem "Information updated successfully"', async () => {
+    it('Retorna um objeto com a mensagem "Withdrawal successful"', async () => {
       sinon.stub(customer, 'findOne').resolves({ dataValues: { ...mocks.resultGetCustomerInfos } });
       sinon.stub(customer, 'update').resolves(true);
-      sinon.stub(customerTransaction, 'create').resolves(true);
+      sinon.stub(customerTransaction, 'create').resolves({ dataValues: { transactionId: 1 } });
 
       const result = await service.withdraw(1, 50);
 
@@ -135,10 +135,10 @@ describe('Verifica os retornos da função deposit na camada de SERVICE', () => 
       customerTransaction.create.restore();
     });
 
-    it('Retorna um objeto com a mensagem "Information updated successfully"', async () => {
+    it('Retorna um objeto com a mensagem "Deposit made successfully"', async () => {
       sinon.stub(customer, 'findOne').resolves({ dataValues: { ...mocks.resultGetCustomerInfos } });
       sinon.stub(customer, 'update').resolves(true);
-      sinon.stub(customerTransaction, 'create').resolves(true);
+      sinon.stub(customerTransaction, 'create').resolves({ dataValues: { transactionId: 1 } });
 
       const result = await service.deposit(1, 50);
 
@@ -249,7 +249,6 @@ describe('Verifica os retornos da função getCustomerStocks na camada de SERVIC
       expect(result.stocksWallet[0]).to.have.property('stockId');
       expect(result.stocksWallet[0]).to.have.property('name');
       expect(result.stocksWallet[0]).to.have.property('quantity');
-      expect(result.stocksWallet[0]).to.have.property('value');
       expect(result.stocksWallet[0]).to.have.property('companyName');
       expect(result.stocksWallet[0]).to.have.property('date');
     });
@@ -262,7 +261,6 @@ describe('Verifica os retornos da função getCustomerStocks na camada de SERVIC
       expect(result.stocksTransactions[0]).to.have.property('transactionId');
       expect(result.stocksTransactions[0]).to.have.property('name');
       expect(result.stocksTransactions[0]).to.have.property('quantity');
-      expect(result.stocksTransactions[0]).to.have.property('value');
       expect(result.stocksTransactions[0]).to.have.property('companyName');
       expect(result.stocksTransactions[0]).to.have.property('date');
       expect(result.stocksTransactions[0]).to.have.property('type');

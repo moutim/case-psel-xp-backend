@@ -21,6 +21,33 @@ const stocks = [
   },
 ];
 
+const stocksInfos = [{
+  stockId: 1,
+  name: 'PETR4',
+  value: 34.5,
+  quantity: 301,
+  companyName: 'BR Petrobras',
+  percentageVariation: 3.45,
+  high: 39.94,
+  low: 8.54,
+  oldPrice: 35.73,
+  typeVariation: 'down',
+  totalInvested: 655.5,
+},
+{
+  stockId: 2,
+  name: 'VALE3',
+  value: 58.66,
+  quantity: 200,
+  companyName: 'VALE',
+  percentageVariation: 2.8,
+  high: 89.97,
+  low: 17.36,
+  oldPrice: 57.06,
+  typeVariation: 'up',
+  totalInvested: 586.6,
+}];
+
 const stocksNotFound = { status: 404, message: 'There are no stocks available at the moment' };
 
 const stockNotFound = { status: 404, message: 'Stock with id 1 not found' };
@@ -28,11 +55,17 @@ const stockNotFound = { status: 404, message: 'Stock with id 1 not found' };
 const buyMade = {
   message: 'Successful purchase',
   transactionId: 10,
+  customerId: 1,
+  quantity: 1,
+  stockId: 1,
 };
 
 const saleMade = {
   message: 'Successful sale',
   transactionId: 10,
+  customerId: 1,
+  quantity: 1,
+  stockId: 1,
 };
 
 const insufficientStocks = { status: 401, message: 'There are not enough stocks to make the purchase' };
@@ -56,4 +89,5 @@ module.exports = {
   transactionError,
   saleMade,
   stocksNotAvailable,
+  stocksInfos,
 };
