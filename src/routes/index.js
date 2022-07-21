@@ -10,6 +10,6 @@ routes.use('/register', require('./register.routes'));
 
 routes.use('/customer', middlewares.authenticateToken, require('./customer.routes'));
 
-routes.use('/stock', middlewares.authenticateToken, require('./stock.routes'));
+routes.use('/stocks', middlewares.authenticateToken, require('./stock.routes'));
 
 module.exports = routes;
