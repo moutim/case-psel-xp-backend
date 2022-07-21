@@ -77,7 +77,7 @@ describe('Verifica os retornos da função withdraw na camada de SERVICE', () =>
       customer.findOne.restore();
     });
 
-    it('Retorna um objeto com a mensagem "Information updated successfully"', async () => {
+    it('Retorna um objeto com a mensagem "Insufficient balance"', async () => {
       sinon.stub(customer, 'findOne').resolves({ dataValues: { ...mocks.resultGetCustomerInfos } });
 
       try {
@@ -95,10 +95,10 @@ describe('Verifica os retornos da função withdraw na camada de SERVICE', () =>
       customerTransaction.create.restore();
     });
 
-    it('Retorna um objeto com a mensagem "Information updated successfully"', async () => {
+    it('Retorna um objeto com a mensagem "Withdrawal successful"', async () => {
       sinon.stub(customer, 'findOne').resolves({ dataValues: { ...mocks.resultGetCustomerInfos } });
       sinon.stub(customer, 'update').resolves(true);
-      sinon.stub(customerTransaction, 'create').resolves(true);
+      sinon.stub(customerTransaction, 'create').resolves({ dataValues: { transactionId: 1 } });
 
       const result = await service.withdraw(1, 50);
 
@@ -135,10 +135,10 @@ describe('Verifica os retornos da função deposit na camada de SERVICE', () => 
       customerTransaction.create.restore();
     });
 
-    it('Retorna um objeto com a mensagem "Information updated successfully"', async () => {
+    it('Retorna um objeto com a mensagem "Deposit made successfully"', async () => {
       sinon.stub(customer, 'findOne').resolves({ dataValues: { ...mocks.resultGetCustomerInfos } });
       sinon.stub(customer, 'update').resolves(true);
-      sinon.stub(customerTransaction, 'create').resolves(true);
+      sinon.stub(customerTransaction, 'create').resolves({ dataValues: { transactionId: 1 } });
 
       const result = await service.deposit(1, 50);
 

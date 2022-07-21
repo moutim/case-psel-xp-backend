@@ -12,9 +12,19 @@ const informationUpdated = { message: 'Information updated successfully' };
 
 const informationNotUpdated = { status: 500, message: 'There was an error updating the information' };
 
-const withdrawSuccessful = { message: 'Withdrawal successful' };
+const withdrawSuccessful = {
+  message: 'Withdrawal successful',
+  transactionId: 1,
+  customerId: 1,
+  value: 50,
+};
 
-const depositMadeSuccessfully = { message: 'Deposit made successfully' };
+const depositMadeSuccessfully = {
+  message: 'Deposit made successfully',
+  transactionId: 1,
+  customerId: 1,
+  value: 50,
+};
 
 const transactionError = { status: 500, message: 'An error occurred while performing the transaction' };
 
