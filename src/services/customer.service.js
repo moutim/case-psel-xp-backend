@@ -133,7 +133,6 @@ const getCustomerStocks = async (customerId) => {
         a.stockId,
         b.name,
         a.quantity,
-        a.value,
         c.name AS "companyName",
         a.date
     FROM customerStockWallet AS a
