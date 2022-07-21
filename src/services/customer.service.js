@@ -61,11 +61,20 @@ const withdraw = async (customerId, value) => {
         { transaction: t },
       );
 
-      if (customerUpdate && transactionCreate) return true;
+      if (customerUpdate && transactionCreate) {
+        return { transactionId: transactionCreate.dataValues.transactionId };
+      }
       return false;
     });
 
-    if (transaction) return { message: 'Withdrawal successful' };
+    if (transaction) {
+      return {
+        message: 'Withdrawal successful',
+        transactionId: transaction.transactionId,
+        customerId,
+        value,
+      };
+    }
 
     throw Error('An error occurred while performing the transaction');
   } catch (error) {
@@ -95,11 +104,20 @@ const deposit = async (customerId, value) => {
         { transaction: t },
       );
 
-      if (customerUpdate && transactionCreate) return true;
+      if (customerUpdate && transactionCreate) {
+        return { transactionId: transactionCreate.dataValues.transactionId };
+      }
       return false;
     });
 
-    if (transaction) return { message: 'Deposit made successfully' };
+    if (transaction) {
+      return {
+        message: 'Deposit made successfully',
+        transactionId: transaction.transactionId,
+        customerId,
+        value,
+      };
+    }
 
     throw Error('An error occurred while performing the transaction');
   } catch (error) {
