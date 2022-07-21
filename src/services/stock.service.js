@@ -53,6 +53,49 @@ const getStocks = async () => {
   return stocks;
 };
 
+const getStockById = async (stockId) => {
+  const stocks = await sequelize.query(
+    `SELECT
+      a.stockId,
+      a.name,
+      a.value,
+      a.quantity,
+      c.name AS "companyName",
+      d.percentage AS "percentageVariation",
+      d.high,
+      d.low,
+      d.oldPrice,
+      e.type AS "typeVariation",
+      SUM(a.value * b.quantity) AS "totalInvested"
+    FROM stock AS a
+    LEFT JOIN customerStockWallet AS b
+    ON a.stockId = b.stockId
+    INNER JOIN company AS c
+    ON a.companyId = c.companyId
+    INNER JOIN stockVariation AS d
+    ON a.stockId = d.stockId
+    INNER JOIN variationType AS e
+    ON d.typeId = e.typeId
+    WHERE a.quantity > 0
+    AND a.stockId = ?
+    GROUP BY 
+      a.stockId,
+      d.high,
+      d.low,
+      d.oldPrice,
+      d.percentage,
+      e.type;`,
+    {
+      replacements: [stockId],
+      type: Sequelize.QueryTypes.SELECT,
+    },
+  );
+
+  if (stocks.length === 0) throw Object({ status: StatusCodes.NOT_FOUND, message: `Stock with id ${stockId} not found` });
+
+  return stocks;
+};
+
 const buyStocks = async (customerId, stockInfo) => {
   const { stockId, quantity } = stockInfo;
 
@@ -233,4 +276,5 @@ module.exports = {
   getStocks,
   buyStocks,
   sellStocks,
+  getStockById,
 };
