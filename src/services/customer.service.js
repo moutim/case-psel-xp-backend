@@ -1,6 +1,6 @@
 const { StatusCodes } = require('http-status-codes');
 const Sequelize = require('sequelize');
-const { customer, customerTransaction } = require('../database/models');
+const { customer, customerTransaction, transactionType } = require('../database/models');
 const bcrypt = require('../utils/bcrypt');
 const config = require('../database/config/config');
 
@@ -108,10 +108,23 @@ const deleteCustomer = async (customerId) => {
   return { message: 'User successfully deleted' };
 };
 
+const getCustomerTransactions = async (customerId) => {
+  const transactions = await customerTransaction.findAll({
+    include: { model: transactionType, as: 'type', attributes: { exclude: ['typeId'] } },
+    attributes: { exclude: ['typeId'] },
+    where: { customerId },
+  });
+
+  if (transactions.length === 0) throw Object({ status: StatusCodes.NOT_FOUND, message: "You don't have transactions yet" });
+
+  return transactions;
+};
+
 module.exports = {
   getCustomerInfos,
   updateCustomerInfos,
   withdraw,
   deposit,
   deleteCustomer,
+  getCustomerTransactions,
 };

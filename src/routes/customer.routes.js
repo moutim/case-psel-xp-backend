@@ -16,4 +16,6 @@ routes.post('/deposit', middlewares.verifyWithdrawDeposit, controller.deposit);
 
 routes.delete('/delete', controller.deleteCustomer);
 
+routes.get('/transaction', controller.getCustomerTransactions);
+
 module.exports = routes;
