@@ -130,18 +130,26 @@ const getCustomerTransactions = async (customerId) => {
 const getCustomerStocks = async (customerId) => {
   const stocksWallet = await sequelize.query(
     `SELECT 
-        a.stockId,
-        b.name,
-        a.quantity,
-        c.name AS "companyName",
-        a.date
+      a.stockId,
+      b.name,
+      a.quantity,
+      c.name AS "companyName",
+      a.date,
+      SUM(b.value * a.quantity) AS "amount"
     FROM customerStockWallet AS a
     INNER JOIN stock AS b
     ON a.stockId = b.stockId
     INNER JOIN company AS c
     ON b.companyId = c.companyId
     WHERE a.customerId = ?
-    AND a.quantity > 0;`,
+    AND a.quantity > 0
+    GROUP BY
+      a.stockId,
+      b.name,
+      a.quantity,
+      "companyName",
+      a.date,
+      "amount";`,
     {
       replacements: [customerId],
       type: QueryTypes.SELECT,
