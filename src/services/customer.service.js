@@ -130,6 +130,7 @@ const getCustomerTransactions = async (customerId) => {
 const getCustomerStocks = async (customerId) => {
   const stocksWallet = await sequelize.query(
     `SELECT 
+      a.customerId,
       a.stockId,
       b.name,
       a.quantity,
@@ -161,7 +162,8 @@ const getCustomerStocks = async (customerId) => {
   }
 
   const stocksTransactions = await sequelize.query(
-    `SELECT 
+    `SELECT
+      a.customerId,
       a.transactionId,
       c.name,
       a.quantity,
