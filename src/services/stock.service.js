@@ -125,12 +125,25 @@ const buyStocks = async (customerId, stockInfo) => {
       }, { transaction: t });
 
       if (updateBalance && updateStock && createStockTransaction && createStockWallet) {
-        return { transactionId: createStockTransaction.dataValues.transactionId };
+        return {
+          transactionId: createStockTransaction.dataValues.transactionId,
+          customerId,
+          stockId,
+          quantity,
+        };
       }
       return false;
     });
 
-    if (transaction) return { message: 'Successful purchase', transactionId: transaction.transactionId };
+    if (transaction) {
+      return {
+        message: 'Successful purchase',
+        transactionId: transaction.transactionId,
+        customerId,
+        stockId,
+        quantity,
+      };
+    }
 
     throw Error('An error occurred while performing the transaction');
   } catch (error) {
@@ -190,12 +203,25 @@ const sellStocks = async (customerId, stockInfo) => {
       );
 
       if (updateBalance && updateStock && createStockTransaction && updateWallet) {
-        return { transactionId: createStockTransaction.dataValues.transactionId };
+        return {
+          transactionId: createStockTransaction.dataValues.transactionId,
+          customerId,
+          stockId,
+          quantity,
+        };
       }
       return false;
     });
 
-    if (transaction) return { message: 'Successful sale', transactionId: transaction.transactionId };
+    if (transaction) {
+      return {
+        message: 'Successful sale',
+        transactionId: transaction.transactionId,
+        customerId,
+        stockId,
+        quantity,
+      };
+    }
 
     throw Error('An error occurred while performing the transaction');
   } catch (error) {
