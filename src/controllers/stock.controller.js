@@ -21,8 +21,16 @@ const sellStocks = async (req, res) => {
   res.status(StatusCodes.OK).json(result);
 };
 
+const getStockById = async (req, res) => {
+  const { id } = req.params;
+  const stock = await service.getStockById(id);
+
+  res.status(StatusCodes.OK).json(stock);
+};
+
 module.exports = {
   getStocks,
   buyStocks,
   sellStocks,
+  getStockById,
 };
