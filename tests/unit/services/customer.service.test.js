@@ -249,7 +249,6 @@ describe('Verifica os retornos da função getCustomerStocks na camada de SERVIC
       expect(result.stocksWallet[0]).to.have.property('stockId');
       expect(result.stocksWallet[0]).to.have.property('name');
       expect(result.stocksWallet[0]).to.have.property('quantity');
-      expect(result.stocksWallet[0]).to.have.property('value');
       expect(result.stocksWallet[0]).to.have.property('companyName');
       expect(result.stocksWallet[0]).to.have.property('date');
     });
@@ -262,7 +261,6 @@ describe('Verifica os retornos da função getCustomerStocks na camada de SERVIC
       expect(result.stocksTransactions[0]).to.have.property('transactionId');
       expect(result.stocksTransactions[0]).to.have.property('name');
       expect(result.stocksTransactions[0]).to.have.property('quantity');
-      expect(result.stocksTransactions[0]).to.have.property('value');
       expect(result.stocksTransactions[0]).to.have.property('companyName');
       expect(result.stocksTransactions[0]).to.have.property('date');
       expect(result.stocksTransactions[0]).to.have.property('type');

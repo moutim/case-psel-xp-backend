@@ -53,7 +53,6 @@ const customerStocks = {
       stockId: 1,
       name: 'PETR4',
       quantity: 10,
-      value: 269.5,
       companyName: 'BR Petrobras',
       date: '2022-07-19T18:56:19.000Z',
     },
