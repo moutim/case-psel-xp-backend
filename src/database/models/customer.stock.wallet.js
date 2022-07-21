@@ -9,7 +9,6 @@ const walletCustomer = (sequelize, DataTypes) => {
     stockId: DataTypes.INTEGER,
     customerId: DataTypes.INTEGER,
     quantity: DataTypes.INTEGER,
-    value: DataTypes.FLOAT(20, 2),
     date: DataTypes.DATE
   },
   { timestamps: false, freezeTableName: true, }
@@ -27,7 +26,7 @@ const walletCustomer = (sequelize, DataTypes) => {
       through: walletCustomerTable,
       foreignKey: 'stockId',
       otherKey: 'customerId',
-      as: 'customer'
+      as: 'customerWallet'
     });
   }
 
