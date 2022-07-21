@@ -55,11 +55,17 @@ const stockNotFound = { status: 404, message: 'Stock with id 1 not found' };
 const buyMade = {
   message: 'Successful purchase',
   transactionId: 10,
+  customerId: 1,
+  quantity: 1,
+  stockId: 1,
 };
 
 const saleMade = {
   message: 'Successful sale',
   transactionId: 10,
+  customerId: 1,
+  quantity: 1,
+  stockId: 1,
 };
 
 const insufficientStocks = { status: 401, message: 'There are not enough stocks to make the purchase' };
