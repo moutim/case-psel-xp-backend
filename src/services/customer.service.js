@@ -55,7 +55,9 @@ const withdraw = async (customerId, value) => {
         { transction: t },
       );
       const transactionCreate = await customerTransaction.create(
-        { typeId: typeIdWithdraw, customerId, value },
+        {
+          typeId: typeIdWithdraw, customerId, value, date: new Date(),
+        },
         { transaction: t },
       );
 
@@ -87,7 +89,9 @@ const deposit = async (customerId, value) => {
         { transction: t },
       );
       const transactionCreate = await customerTransaction.create(
-        { typeId: typeIdDeposit, customerId, value },
+        {
+          typeId: typeIdDeposit, customerId, value, date: new Date(),
+        },
         { transaction: t },
       );
 
