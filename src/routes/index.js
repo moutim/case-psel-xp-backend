@@ -376,7 +376,7 @@ routes.use('/stocks', middlewares.authenticateToken, require('./stock.routes'));
  *        - application/json
  *       responses:
  *         200:
- *           description: Conta criada com sucesso
+ *           description: Retorna um objeto com as informações do cliente
  *           content:
  *             application/json:
  *               schema:
@@ -401,7 +401,7 @@ routes.use('/stocks', middlewares.authenticateToken, require('./stock.routes'));
  *        - application/json
  *       responses:
  *         200:
- *           description: Array de objetos com as informações
+ *           description: Array de objetos com as informações das transações.
  *           content:
  *             application/json:
  *               schema:
