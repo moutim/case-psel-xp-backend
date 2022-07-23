@@ -96,56 +96,66 @@ const getStockById = async (stockId) => {
   return stocks;
 };
 
+const checkStockQuantityAvailable = (stockToCompare, quantity) => {
+  if (quantity > stockToCompare.dataValues.quantity) {
+    throw Object({ status: StatusCodes.UNAUTHORIZED, message: 'There are not enough stocks to make the purchase' });
+  }
+};
+
+const checkCustomerBalance = (customerToCompare, value) => {
+  if (value > customerToCompare.dataValues.balance) {
+    throw Object({ status: StatusCodes.UNAUTHORIZED, message: 'Insufficient balance for this transaction' });
+  }
+};
+
+const findStock = async (stockId) => {
+  const stockFound = await stock.findOne({ where: { stockId } });
+
+  if (!stockFound) throw Object({ status: StatusCodes.NOT_FOUND, message: `Stock with id ${stockId} not found` });
+
+  return stockFound;
+};
+
 const buyStocks = async (customerId, stockInfo) => {
   const { stockId, quantity } = stockInfo;
 
   const customerInfos = await customerService.getCustomerInfos(customerId);
 
-  // Verifica se a ação existe
-  const stockFound = await stock.findOne({ where: { stockId } });
+  const stockFound = await findStock(stockId);
+
   if (!stockFound) throw Object({ status: StatusCodes.NOT_FOUND, message: `Stock with id ${stockId} not found` });
 
-  // Verifica se há ações suficientes para compra
-  if (quantity > stockFound.dataValues.quantity) {
-    throw Object({ status: StatusCodes.UNAUTHORIZED, message: 'There are not enough stocks to make the purchase' });
-  }
+  checkStockQuantityAvailable(stockFound, quantity);
 
   const stocksValue = stockFound.dataValues.value * quantity;
 
-  // Verifica se o cliente tem saldo suficiente para à compra
-  if (stocksValue > customerInfos.dataValues.balance) {
-    throw Object({ status: StatusCodes.UNAUTHORIZED, message: 'Insufficient balance for this transaction' });
-  }
+  checkCustomerBalance(customerInfos, stocksValue);
 
   try {
     const typeIdBuy = 1;
 
     const transaction = await sequelize.transaction(async (t) => {
-      // Atualiza balance do cliente
       const updateBalance = await customer.update(
         { balance: customerInfos.dataValues.balance - stocksValue },
         { where: { customerId } },
         { transaction: t },
       );
 
-      // Atualiza quantidade de stocks na tabela
       const updateStock = await stock.update(
         { quantity: stockFound.dataValues.quantity - quantity },
         { where: { stockId } },
         { transaction: t },
       );
 
-      // Cria registro da compra
       const createStockTransaction = await customerStockTransaction.create({
         customerId, stockId, value: stocksValue, quantity, typeId: typeIdBuy, date: new Date(),
       }, { transaction: t });
 
-      // Verifica se o cliente já possui alguma ação
       const customerHasStocks = await customerStockWallet.findOne(
         { where: { customerId, stockId } },
       );
+
       if (customerHasStocks) {
-        // Atualiza carteira de ações do cliente
         const updateWallet = await customerStockWallet.update(
           {
             quantity: customerHasStocks.dataValues.quantity + quantity,
@@ -162,7 +172,6 @@ const buyStocks = async (customerId, stockInfo) => {
         return false;
       }
 
-      // Cria nova ação na carteira do cliente
       const createStockWallet = await customerStockWallet.create({
         customerId, stockId, quantity, value: stocksValue, date: new Date(),
       }, { transaction: t });
@@ -194,47 +203,45 @@ const buyStocks = async (customerId, stockInfo) => {
   }
 };
 
+const checkCustomerStockWallet = (customerWallet, quantity) => {
+  if (quantity > customerWallet.dataValues.quantity) {
+    throw Object({ status: StatusCodes.UNAUTHORIZED, message: `You have only ${customerWallet.dataValues.quantity} stocks available for sale` });
+  }
+};
+
 const sellStocks = async (customerId, stockInfo) => {
   const { stockId, quantity } = stockInfo;
 
   const customerInfos = await customerService.getCustomerInfos(customerId);
 
-  // Verifica se a ação existe
-  const stockFound = await stock.findOne({ where: { stockId } });
-  if (!stockFound) throw Object({ status: StatusCodes.NOT_FOUND, message: `Stock with id ${stockId} not found` });
+  const stockFound = await await findStock(stockId);
 
   const stocksValue = stockFound.dataValues.value * quantity;
 
-  // Verifica se o cliente tem ações suficientes para venda
   const customerWallet = await customerStockWallet.findOne({ where: { customerId, stockId } });
-  if (quantity > customerWallet.dataValues.quantity) {
-    throw Object({ status: StatusCodes.UNAUTHORIZED, message: `You have only ${customerWallet.dataValues.quantity} stocks available for sale` });
-  }
+
+  checkCustomerStockWallet(customerWallet);
 
   try {
     const typeIdSell = 2;
 
     const transaction = await sequelize.transaction(async (t) => {
-      // Atualiza balance do cliente
       const updateBalance = await customer.update(
         { balance: customerInfos.dataValues.balance + stocksValue },
         { where: { customerId } },
         { transaction: t },
       );
 
-      // Atualiza quantidade de stocks na tabela
       const updateStock = await stock.update(
         { quantity: stockFound.dataValues.quantity + quantity },
         { where: { stockId } },
         { transaction: t },
       );
 
-      // Cria registro da compra
       const createStockTransaction = await customerStockTransaction.create({
         customerId, stockId, value: stocksValue, quantity, typeId: typeIdSell, date: new Date(),
       }, { transaction: t });
 
-      // Atualiza carteira do cliente
       const updateWallet = await customerStockWallet.update(
         {
           quantity: customerWallet.dataValues.quantity - quantity,
@@ -273,6 +280,10 @@ const sellStocks = async (customerId, stockInfo) => {
 };
 
 module.exports = {
+  checkStockQuantityAvailable,
+  checkCustomerBalance,
+  findStock,
+  checkCustomerStockWallet,
   getStocks,
   buyStocks,
   sellStocks,
