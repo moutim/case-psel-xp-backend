@@ -13,18 +13,12 @@ const variationStock = async () => {
     let oneForUpTwoForDown = 2;
     let newPrice;
 
-    // Número flutuante aleatório de 0 a 4 que determinará qual a porcentagem a ser calculada
     const variationPercentage = parseFloat((Math.random() * 4).toFixed(2));
 
-    // Número inteiro aleatório de 0 a 99 que determinará se soma ou subtrai
     const randomNumber = Math.floor(Math.random() * 100);
 
-    // Valor total a ser somado ou subtraido a partir da porcentagem e do valor atual da ação
     const valueToBeCalculed = ((value * variationPercentage) / 100);
 
-    // Subtrai valor total do valor da ação
-
-    // Se o numero aleatorio gerador for maior que 50 o valor é somado se nao é subtraido
     if (randomNumber > 49) {
       newPrice = value + valueToBeCalculed;
       oneForUpTwoForDown = 1;
