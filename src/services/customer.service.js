@@ -183,6 +183,7 @@ const getCustomerStocks = async (customerId) => {
     `SELECT
       a.customerId,
       a.transactionId,
+      a.stockId,
       c.name,
       a.quantity,
       a.value,
