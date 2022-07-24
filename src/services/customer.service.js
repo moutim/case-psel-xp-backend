@@ -145,7 +145,7 @@ const getCustomerTransactions = async (customerId) => {
   return transactions;
 };
 
-const getCustomerStocks = async (customerId) => {
+const getCustomerStocksWallet = async (customerId) => {
   const stocksWallet = await sequelize.query(
     `SELECT 
       a.customerId,
@@ -179,6 +179,10 @@ const getCustomerStocks = async (customerId) => {
     stocksWallet.push({ message: "You don't have any stocks in your wallet" });
   }
 
+  return stocksWallet;
+};
+
+const getCustomerStocksTransactions = async (customerId) => {
   const stocksTransactions = await sequelize.query(
     `SELECT
       a.customerId,
@@ -207,6 +211,14 @@ const getCustomerStocks = async (customerId) => {
   if (stocksTransactions.length === 0) {
     stocksTransactions.push({ message: "'You have not executed any stock transactions yet'" });
   }
+
+  return stocksTransactions;
+};
+
+const getCustomerStocks = async (customerId) => {
+  const stocksWallet = await getCustomerStocksWallet(customerId);
+
+  const stocksTransactions = await getCustomerStocksTransactions(customerId);
 
   return { stocksWallet, stocksTransactions };
 };
