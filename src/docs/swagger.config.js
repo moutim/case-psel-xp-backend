@@ -2,8 +2,8 @@ const swaggerConfig = {
   definition: {
     openapi: '3.0.1',
     info: {
-      title: 'My API Documentation',
-      description: 'This is a sample OpenAPI document',
+      title: 'Case Back-End PSEL XP Inc.',
+      description: 'Essa API simula o funcionamento de uma aplicação para compra e venda de ações com valor varíavel.',
       version: '1.0',
     },
     servers: [
