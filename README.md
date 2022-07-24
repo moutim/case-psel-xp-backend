@@ -87,7 +87,7 @@ Essa aplicação simula um ambiente de uma corretora para investimentos em açõ
   * A tabela não deve possuir dependências parciais;
   * A tabela não deve conter atributos (colunas) que não sejam dependentes exclusivamente da  chave primária;
 
-	![modelagem.png](modelagem.png)
+	![modelagem.png](./imgs/modelagem.png)
 <br  />
 </details>
 
@@ -96,7 +96,7 @@ Essa aplicação simula um ambiente de uma corretora para investimentos em açõ
   Para desenvolver os testes unitários, escolhi ultilizar Mocha, Chai e Sinon em conjunto.
   A cobertura total de testes em todos os arquivos da aplicação está em cerca de 90%;
 
-  ![testes.png](testes.png)
+  ![testes.png](./imgs/testes.png)
 <br  />
 </details>
 
@@ -108,7 +108,7 @@ Essa aplicação simula um ambiente de uma corretora para investimentos em açõ
   * Service - responsável pela regra de negócio;
   * Controller - responsável pelo requisição e resposta.
 
-  ![arquitetura.png](arquitetura.png)
+  ![arquitetura.png](./imgs/arquitetura.png)
 <br  />
 </details>
 
@@ -116,11 +116,11 @@ Essa aplicação simula um ambiente de uma corretora para investimentos em açõ
 <summary><strong>📥 CI/CD</strong></summary><br  />
   O CI (Continuous integration / Integração contínua) foi implementado por meio do GitHub Actions para garantir que todas as novas funcionalidades não irão corromper a aplicação final. A cada novo merge para a main, é executado todos os testes unitários para confirmar que tudo está rodando conforme o esperado e o ESLint para garantir o padrão de código.
 
- ![ci.png](ci.png)
+ ![ci.png](./imgs/ci.png)
 
   O CD (Continuos delivery/ Entrega contínua) foi implementado pelo Heroku, para que todo novo merge na main, seja realizado o deploy automaticamente.
 
-  ![cd.png](cd.png)
+  ![cd.png](./imgs/cd.png)
 <br  />
 </details>
 
@@ -186,9 +186,10 @@ Essa aplicação simula um ambiente de uma corretora para investimentos em açõ
 ## Documentação e deploy
 A documentação dessa API foi feita por meio do Swagger. 
 [Documentação completa](https://psel-xp-backend.herokuapp.com/documentation/)
-![swagger.png](swagger.png)
+![swagger.png](./imgs/swagger.png)
 
 O deploy da aplicação foi feita no Heroku usando ambiente Dockerizado.
+
 [Endpoint Deploy](https://psel-xp-backend.herokuapp.com/)
 
 ## Rodando aplicação via Docker ou Local
