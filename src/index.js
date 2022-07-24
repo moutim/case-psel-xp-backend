@@ -11,9 +11,7 @@ app.use(express.json());
 
 app.use(require('./routes'));
 
-app.get('/', (req, res) => res.send('<h1> FUNCIONANDO </h1>'));
-
-setInterval(require('./services/stock.variation.service'), 15000);
+// setInterval(require('./services/stock.variation.service'), 15000);
 
 app.use(middlewares.errorHandler);
 
