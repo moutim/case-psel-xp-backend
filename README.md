@@ -42,6 +42,7 @@ Essa aplicação simula um ambiente de uma corretora para investimentos em açõ
 <details>
 <summary><strong>🧬 Padrões de desenvolvimento e boas práticas</strong></summary><br  />
   Nesse projeto, tentei seguir um padrão para o fluxo de desenvolvimento, que foi: 
+
   * Para toda nova implementação um PR era criado;
   * Desenvolver a implementação do requisito;
   * Escrever os testes unitários para o que foi desenvolvido;
@@ -94,6 +95,7 @@ Essa aplicação simula um ambiente de uma corretora para investimentos em açõ
 <summary><strong>🧪 Testes unitários</strong></summary><br  />
   Para desenvolver os testes unitários, escolhi ultilizar Mocha, Chai e Sinon em conjunto.
   A cobertura total de testes em todos os arquivos da aplicação está em cerca de 90%;
+
   ![testes.png](testes.png)
 <br  />
 </details>
@@ -101,9 +103,10 @@ Essa aplicação simula um ambiente de uma corretora para investimentos em açõ
 <details>
 <summary><strong>🏗 Arquitetura de Software</strong></summary><br  />
   A arquitetura ultilizada nessa aplicação, foi MSC, que conta com as camadas de:
-	 * Model - responsável por executar as operações do banco de dados;
-	 * Service - responsável pela regra de negócio;
-	 * Controller - responsável pelo requisição e resposta.
+
+  * Model - responsável por executar as operações do banco de dados;
+  * Service - responsável pela regra de negócio;
+  * Controller - responsável pelo requisição e resposta.
 
   ![arquitetura.png](arquitetura.png)
 <br  />
