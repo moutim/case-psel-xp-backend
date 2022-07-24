@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
 const express = require('express');
 
+const cors = require('cors');
+
 require('express-async-errors');
 
 const app = express();
@@ -8,6 +10,14 @@ const app = express();
 const middlewares = require('./middlewares');
 
 app.use(express.json());
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', '*');
+  app.use(cors());
+  next();
+});
 
 app.use(require('./routes'));
 
