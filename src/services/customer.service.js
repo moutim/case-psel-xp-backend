@@ -154,7 +154,7 @@ const getCustomerStocksWallet = async (customerId) => {
       a.quantity,
       c.name AS "companyName",
       a.date,
-      SUM(b.value * a.quantity) AS "amount"
+      SUM(b.value * a.quantity) AS "value"
     FROM customerStockWallet AS a
     INNER JOIN stock AS b
     ON a.stockId = b.stockId
@@ -192,7 +192,7 @@ const getCustomerStocksTransactions = async (customerId) => {
       a.quantity,
       a.value,
       d.name AS "companyName",
-      b.type,
+      b.type AS "transactionType",
       a.date
     FROM customerStockTransaction AS a
     INNER JOIN transactionType AS b
