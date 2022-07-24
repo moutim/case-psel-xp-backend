@@ -20,13 +20,13 @@ jobs:
   tests:
       runs-on: ubuntu-latest
       env:
-        MYSQL_USER: root
-        MYSQL_PASSWORD: password
-        MYSQL_DATABASE: psel-xp-inc
-        MYSQL_PORT: 3306
-        HOSTNAME: localhost
-        DIALECT: mysql
-        SECRET: secret
+        DB_USER: root
+        DB_PASSWORD: password
+        DB_DATABASE: PSEL-XP
+        DB_HOSTNAME: localhost
+        DB_PORT: 3306
+        DB_DIALECT: mysql
+        SECRET: mySecret
       steps:
           - name: Verifica o repositório do Git
             uses: actions/checkout@v2
