@@ -102,7 +102,7 @@ Essa aplicação simula um ambiente de uma corretora para investimentos em açõ
 
 <details>
 <summary><strong>🏗 Arquitetura de Software</strong></summary><br  />
-  A arquitetura ultilizada nessa aplicação, foi MSC, que conta com as camadas de:
+  A arquitetura ultilizada nessa aplicação foi a MSC, que conta com as camadas de:
 
   * Model - responsável por executar as operações do banco de dados;
   * Service - responsável pela regra de negócio;
