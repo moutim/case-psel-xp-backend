@@ -45,7 +45,7 @@ routes.use('/stocks', middlewares.authenticateToken, require('./stock.routes'));
     *      properties:
     *        email:
     *          type: string
-    *          example: login@example.com
+    *          example: psel@example.com
     *        password:
     *          type: string
     *          example: 12345

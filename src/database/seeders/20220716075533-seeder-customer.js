@@ -17,6 +17,14 @@ module.exports = {
         password: '$2b$10$wYeJ4kRrLrrQK1hboCBh4uTeq.Vm9kgLgpNlWA/pW5/l6VRCz.xMq',
         balance: 400
       },
+      {
+        firstName: 'PSEL',
+        lastName: 'XP Inc',
+        email: 'psel@example.com',
+        password: '$2b$05$PmSLdYnYVPttOUziyIgqQOZfWqdR1NKaDqbUwJ.RS/1dCASZsb.zy',
+        balance: 10000
+      },
+      
     ], {});
   },
 

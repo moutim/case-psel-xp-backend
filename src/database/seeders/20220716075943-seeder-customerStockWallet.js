@@ -22,6 +22,16 @@ module.exports = {
         stockId: 2,
         customerId: 2,
         quantity: 5,
+      },
+      {
+        stockId: 1,
+        customerId: 3,
+        quantity: 10,
+      },
+      {
+        stockId: 2,
+        customerId: 3,
+        quantity: 5,
       }
     ], {});
   },

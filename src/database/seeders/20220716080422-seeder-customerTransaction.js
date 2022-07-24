@@ -22,6 +22,16 @@ module.exports = {
         customerId: 2,
         typeId: 3,
         value: 80,
+      },
+      {
+        customerId: 3,
+        typeId: 4,
+        value: 70,
+      },
+      {
+        customerId: 3,
+        typeId: 3,
+        value: 80,
       }
     ], {});
   },

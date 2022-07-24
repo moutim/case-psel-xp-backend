@@ -30,6 +30,20 @@ module.exports = {
         quantity: 5,
         value: 376.35,
         typeId: 2,
+      },
+      {
+        stockId: 1,
+        customerId: 3,
+        quantity: 10,
+        value: 269.50,
+        typeId: 1,
+      },
+      {
+        stockId: 2,
+        customerId: 3,
+        quantity: 5,
+        value: 376.35,
+        typeId: 2,
       }
     ], {});
   },
