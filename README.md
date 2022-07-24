@@ -77,6 +77,14 @@ Essa aplicação simula um ambiente de uma corretora para investimentos em açõ
 
 <details>
 <summary><strong>📅 Banco de dados</strong></summary><br  />
+  Para usar um banco de dados MySQL em ambiente de produção, escolhi usar um serviço em nuuvem, que foi a AWS RDS.
+  Fique a vontade para visualizar o DB com os seguintes dados:
+
+  * host: db-psel-xp.cavmg1wqknjz.us-east-1.rds.amazonaws.com
+  * port: 3306
+  * user: root
+  * password: j7h5h8b3
+
   A modelagem do banco de dados foi feita no WorkBench e normalizada até a 3ª Forma Normal.
 
   Os requisitos para as tabelas estarem na 3ª Forma Normal são:
@@ -184,13 +192,14 @@ Essa aplicação simula um ambiente de uma corretora para investimentos em açõ
 </details>
 
 ## Documentação e deploy
+
+O deploy da aplicação foi feita no Heroku usando ambiente Dockerizado e o banco de dados usado foi o da AWS RDS com MySQL.
+
+[Endpoint Deploy](https://psel-xp-backend.herokuapp.com/)
+
 A documentação dessa API foi feita por meio do Swagger. 
 [Documentação completa](https://psel-xp-backend.herokuapp.com/documentation/)
 ![swagger.png](./imgs/swagger.png)
-
-O deploy da aplicação foi feita no Heroku usando ambiente Dockerizado.
-
-[Endpoint Deploy](https://psel-xp-backend.herokuapp.com/)
 
 ## Rodando aplicação via Docker ou Local
   ### Setando as variáveis de ambiente
