@@ -7,6 +7,7 @@ const swaggerConfig = {
       version: '1.0',
     },
     servers: [
+      { url: 'https://psel-xp-backend.herokuapp.com', description: 'Ambiente de produção' },
       { url: 'http://localhost:5000', description: 'Ambiente de desenvolvimento' },
     ],
     components: {
