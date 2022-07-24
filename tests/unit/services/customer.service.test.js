@@ -263,7 +263,7 @@ describe('Verifica os retornos da função getCustomerStocks na camada de SERVIC
       expect(result.stocksTransactions[0]).to.have.property('quantity');
       expect(result.stocksTransactions[0]).to.have.property('companyName');
       expect(result.stocksTransactions[0]).to.have.property('date');
-      expect(result.stocksTransactions[0]).to.have.property('type');
+      expect(result.stocksTransactions[0]).to.have.property('transactionType');
     });
   });
 
