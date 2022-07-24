@@ -4,16 +4,16 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.bulkInsert('transactionType', [
       {
-        type: 'compra',
+        type: 'buy',
       },
       {
-        type: 'venda',
+        type: 'sell',
       },
       {
-        type: 'saque',
+        type: 'withdraw',
       },
       {
-        type: 'deposito',
+        type: 'deposit',
       }
     ], {});
   },
