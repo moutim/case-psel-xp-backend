@@ -21,7 +21,7 @@ app.use((req, res, next) => {
 
 app.use(require('./routes'));
 
-// setInterval(require('./services/stock.variation.service'), 15000);
+setInterval(require('./services/stock.variation.service'), 5000);
 
 app.use(middlewares.errorHandler);
 
