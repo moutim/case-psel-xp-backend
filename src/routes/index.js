@@ -341,7 +341,7 @@ routes.use('/stocks', middlewares.authenticateToken, require('./stock.routes'));
  *               type: object
  *               $ref: '#/components/schemas/Register'
  *       responses:
- *         200:
+ *         201:
  *           description: Conta criada com sucesso
  *           content:
  *             application/json:
@@ -419,7 +419,7 @@ routes.use('/stocks', middlewares.authenticateToken, require('./stock.routes'));
  *   /customer/stocks:
  *     get:
  *       tags: [Customer]
- *       summary: Informação sobre as ações do cliente
+ *       summary: Informações sobre a carteira e as transações de ações do cliente
  *       description: Retorna um objeto com stocksWallet,
  *         onde está todas as ações que o cliente possui e stocksTransactions
  *         com todas as transações envolvendo ações
