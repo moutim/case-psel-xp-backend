@@ -209,8 +209,11 @@ A documentação dessa API foi feita por meio do Swagger.
   ### Rodando com Docker
   Instale as dependências com `npm install`
 
-  Rode o comando `docker-compose up -d`
+  Rode o comando `docker-compose up -d` para subir os containers do coker
   * Garanta que as portas **3306** e **3000** não estão sendo usadas.
+
+  Rode o comando `npm run db:restore`
+  * Esse comando cria o banco de dados a partir do Sequelize
 
   Execute o `npm run dev`
   * Verifique o log no seu console e veja a porta em que a aplicação está rodando
@@ -222,6 +225,9 @@ A documentação dessa API foi feita por meio do Swagger.
   * Possuir MySQL instalado; 
 
   Instale as dependências com `npm install`
+
+  Rode o comando `npm run db:restore`
+  * Esse comando cria o banco de dados a partir do Sequelize
 
   Execute o `npm run dev`
   * Verifique o log no seu console e veja a porta em que a aplicação está rodando
