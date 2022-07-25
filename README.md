@@ -213,7 +213,7 @@ A documentação dessa API foi feita por meio do Swagger.
   * Garanta que as portas **3306** e **3000** não estão sendo usadas.
 
   Rode o comando `npm run db:restore`
-  * Esse comando cria o banco de dados a partir do Sequelize
+  * Esse comando cria e popula o banco de dados a partir do Sequelize
 
   Execute o `npm run dev`
   * Verifique o log no seu console e veja a porta em que a aplicação está rodando
@@ -227,7 +227,7 @@ A documentação dessa API foi feita por meio do Swagger.
   Instale as dependências com `npm install`
 
   Rode o comando `npm run db:restore`
-  * Esse comando cria o banco de dados a partir do Sequelize
+  * Esse comando cria e popula o banco de dados a partir do Sequelize
 
   Execute o `npm run dev`
   * Verifique o log no seu console e veja a porta em que a aplicação está rodando
