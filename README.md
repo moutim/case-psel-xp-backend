@@ -78,12 +78,6 @@ Essa aplicação simula um ambiente de uma corretora para investimentos em açõ
 <details>
 <summary><strong>📅 Banco de dados</strong></summary><br  />
   Para usar um banco de dados MySQL em ambiente de produção, escolhi usar um serviço em nuuvem, que foi a AWS RDS.
-  Fique a vontade para visualizar o DB com os seguintes dados:
-
-  * host: db-psel-xp.cavmg1wqknjz.us-east-1.rds.amazonaws.com
-  * port: 3306
-  * user: root
-  * password: j7h5h8b3
 
   A modelagem do banco de dados foi feita no WorkBench e normalizada até a 3ª Forma Normal.
 
