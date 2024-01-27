@@ -187,12 +187,12 @@ Essa aplicação simula um ambiente de uma corretora para investimentos em açõ
 
 ## Documentação e deploy
 
-O deploy da aplicação foi feita no Heroku usando ambiente Dockerizado e o banco de dados usado foi o da AWS RDS com MySQL.
+O deploy da aplicação foi feita no Render (geralmente o servidor precisa ligar quando há uma requisição, então espere um pouco para que a página carregue) e o banco de dados usado foi o da AWS RDS com MySQL.
 
-[Endpoint Deploy](https://psel-xp-backend.herokuapp.com/)
+[Endpoint Deploy](https://api-case.onrender.com/)
 
 A documentação dessa API foi feita por meio do Swagger. 
-[Documentação completa](https://psel-xp-backend.herokuapp.com/documentation/)
+[Documentação completa](https://api-case.onrender.com/documentation/)
 ![swagger.png](./imgs/swagger.png)
 
 ## Rodando aplicação via Docker ou Local
