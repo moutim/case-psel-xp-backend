@@ -55,7 +55,7 @@ Essa aplicação simula um ambiente de uma corretora para investimentos em açõ
 </details>
 
 <details>
-<summary><strong>👨‍💻 Tecnologias e pacotes usadas</strong></summary><br  />
+<summary><strong>👨‍💻 Tecnologias e pacotes usados</strong></summary><br  />
 
 * [JavaScript](https://www.javascript.com/)
 * [Node.js](https://nodejs.org/en/)
