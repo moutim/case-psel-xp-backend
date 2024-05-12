@@ -7,7 +7,7 @@ const swaggerConfig = {
       version: '1.0',
     },
     servers: [
-      { url: 'https://api-case.onrender.com', description: 'Ambiente de produção' },
+      { url: 'https://case-psel-xp-backend.onrender.com', description: 'Ambiente de produção' },
       { url: 'http://localhost:5000', description: 'Ambiente de desenvolvimento' },
     ],
     components: {
